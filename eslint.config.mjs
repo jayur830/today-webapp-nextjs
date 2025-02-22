@@ -64,6 +64,10 @@ const eslintConfig = [
         'error',
         { blocks: 'never' },
       ],
+      '@stylistic/quote-props': [
+        'error',
+        'as-needed',
+      ],
       '@stylistic/semi': 'error',
       // '@stylistic/object-curly-newline': [
       //   'error',
