@@ -22,6 +22,30 @@ export const typography = createTypography(palette, {
   h1: {
     fontSize: 32,
   },
+  h2: {
+    fontSize: 28,
+  },
+  h3: {
+    fontSize: 24,
+  },
+  h4: {
+    fontSize: 20,
+  },
+  h5: {
+    fontSize: 18,
+  },
+  h6: {
+    fontSize: 16,
+  },
+  body1: {
+    fontSize: 16,
+  },
+  body2: {
+    fontSize: 16,
+  },
+  button: {
+    fontSize: 16,
+  },
 });
 
 export const theme = createTheme({

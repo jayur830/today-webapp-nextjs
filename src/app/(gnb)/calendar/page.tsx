@@ -19,7 +19,7 @@ export default function Page() {
   ] = useState<Dayjs>(dayjs().startOf('month'));
 
   return (
-    <Stack alignItems="center" gap={2} padding={3}>
+    <Stack alignItems="center" gap={2} width="100%" padding={3}>
       <MobileDatePicker
         format="YYYY-MM"
         openTo="month"

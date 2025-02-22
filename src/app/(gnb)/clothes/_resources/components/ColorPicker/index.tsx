@@ -1,8 +1,10 @@
 'use client';
 
+import { Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { grey } from '@mui/material/colors';
+import Grid from '@mui/material/Grid2';
 import Popover from '@mui/material/Popover';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
@@ -23,6 +25,7 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
   return (
     <>
       <Button
+        fullWidth
         disableRipple
         onClick={(e) => {
           setAnchorEl(e.currentTarget);
@@ -35,6 +38,7 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
         }}
       >
         <TextField
+          fullWidth
           size="small"
           value={value}
           slotProps={{
@@ -75,9 +79,6 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
         slotProps={{
           paper: {
             sx: {
-              display: 'grid',
-              gridTemplateColumns: 'repeat(14, 1fr)',
-              gap: 1,
               padding: 2,
             },
           },
@@ -86,28 +87,57 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
           maxHeight: 200,
         }}
       >
-        {colors.map((color, i) => (
-          <Button
-            key={i}
-            onClick={() => {
-              onChange && onChange(color);
-              setAnchorEl(undefined);
-            }}
-            sx={{
-              minWidth: 0,
-              minHeight: 0,
-              padding: 0,
-            }}
-          >
-            <Box
-              bgcolor={color}
-              width={20}
-              border={`1px solid ${grey['400']}`}
-              borderRadius={1}
-              sx={{ aspectRatio: 1 }}
-            />
-          </Button>
-        ))}
+        <Stack direction="row" gap={1}>
+          {[
+            '#FFFFFF',
+            '#000000',
+          ].map((color, i) => (
+            <Button
+              key={i}
+              onClick={() => {
+                onChange && onChange(color);
+                setAnchorEl(undefined);
+              }}
+              sx={{
+                minWidth: 0,
+                minHeight: 0,
+                padding: 0,
+              }}
+            >
+              <Box
+                bgcolor={color}
+                width={20}
+                border={`1px solid ${grey['400']}`}
+                borderRadius={1}
+                sx={{ aspectRatio: 1 }}
+              />
+            </Button>
+          ))}
+        </Stack>
+        <Grid display="grid" gridTemplateColumns="repeat(14, 1fr)" gap={1} marginTop={1}>
+          {colors.map((color, i) => (
+            <Button
+              key={i}
+              onClick={() => {
+                onChange && onChange(color);
+                setAnchorEl(undefined);
+              }}
+              sx={{
+                minWidth: 0,
+                minHeight: 0,
+                padding: 0,
+              }}
+            >
+              <Box
+                bgcolor={color}
+                width={20}
+                border={`1px solid ${grey['400']}`}
+                borderRadius={1}
+                sx={{ aspectRatio: 1 }}
+              />
+            </Button>
+          ))}
+        </Grid>
       </Popover>
     </>
   );
