@@ -17,6 +17,7 @@ const eslintConfig = [
   ...tsESlint.configs.recommended,
   {
     rules: {
+      '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
     },
   },
