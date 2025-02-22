@@ -1,4 +1,5 @@
 import CalendarMonth from '@mui/icons-material/CalendarMonth';
+import Checkroom from '@mui/icons-material/Checkroom';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Link from 'next/link';
@@ -25,6 +26,7 @@ export default function Layout({ children }: PropsWithChildren) {
         }}
       >
         <BottomNavigationAction LinkComponent={Link} href="/calendar" label="캘린더" icon={<CalendarMonth />} />
+        <BottomNavigationAction LinkComponent={Link} href="/clothes" label="옷장" icon={<Checkroom />} />
       </BottomNavigation>
     </>
   );

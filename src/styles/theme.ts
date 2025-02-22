@@ -9,19 +9,22 @@ import { fonts } from '@/assets/fonts';
 export const palette = createPalette({});
 
 export const typography = createTypography(palette, {
+  fontFamily: fonts.style.fontFamily,
   allVariants: {
-    fontFamily: fonts.style.fontFamily,
     letterSpacing: -0.5,
+  },
+  h1: {
+    fontSize: 32,
   },
 });
 
 export const theme = createTheme({
   palette,
   components: {
-    MuiTypography: {
+    MuiChip: {
       styleOverrides: {
-        root: {
-          // fontFamily: fonts.style.fontFamily,
+        label: {
+          lineHeight: 1,
         },
       },
     },
