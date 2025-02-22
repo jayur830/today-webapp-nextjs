@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
 
 import { fonts } from '@/assets/fonts';
+import DatePickerProvider from '@/contexts/DatePickerProvider';
 import { theme } from '@/styles/theme';
 
 export const metadata: Metadata = {
@@ -19,7 +20,9 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
       <body className={fonts.className}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            {children}
+            <DatePickerProvider>
+              {children}
+            </DatePickerProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
