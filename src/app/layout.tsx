@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
 
 import { fonts } from '@/assets/fonts';
+import ToastContainer from '@/components/ToastContainer';
 import DatePickerProvider from '@/contexts/DatePickerProvider';
 import { theme } from '@/styles/theme';
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
           <ThemeProvider theme={theme}>
             <DatePickerProvider>
               {children}
+              <ToastContainer />
             </DatePickerProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>

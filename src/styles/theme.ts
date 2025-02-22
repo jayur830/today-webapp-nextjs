@@ -27,6 +27,16 @@ export const typography = createTypography(palette, {
 export const theme = createTheme({
   palette,
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
+          ':hover': {
+            boxShadow: 'none',
+          },
+        },
+      },
+    },
     MuiChip: {
       styleOverrides: {
         label: {

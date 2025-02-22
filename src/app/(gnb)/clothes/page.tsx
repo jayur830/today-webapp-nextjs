@@ -7,6 +7,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
+import { toast } from '@/components/ToastContainer/toast';
+
 import ColorPicker from './_resources/components/ColorPicker';
 import { sections } from './_resources/constants';
 
@@ -28,7 +30,7 @@ export default function Page() {
   }));
 
   return (
-    <Stack gap={5} padding={3}>
+    <Stack gap={5} width="100%" padding={3}>
       {sections.map(({ id: sectionId, title, items }, i) => (
         <Grid key={i}>
           <Typography variant="h1" fontWeight={700}>
@@ -69,6 +71,18 @@ export default function Page() {
               }));
             }}
           />
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={() => {
+              toast.info('의류가 추가되었습니다.');
+            }}
+            sx={{
+              marginTop: 2,
+            }}
+          >
+            추가
+          </Button>
         </Grid>
       ))}
     </Stack>
