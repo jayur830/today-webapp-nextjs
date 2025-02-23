@@ -11,15 +11,10 @@ import { useState } from 'react';
 
 import { toast } from '@/components/ToastContainer/toast';
 import { STORAGE_KEY } from '@/constants';
+import type { TodayClothingData } from '@/types';
 
 import ColorPicker from './_resources/components/ColorPicker';
 import { sections } from './_resources/constants';
-
-interface TodayClothingData {
-  sectionId: string;
-  clothingId: string;
-  color: string;
-}
 
 export default function Page() {
   const [
@@ -43,7 +38,7 @@ export default function Page() {
   ] = useState<TodayClothingData[]>(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
 
   return (
-    <Stack divider={<Divider />} gap={5} width="100%" padding={3}>
+    <Stack divider={<Divider />} gap={5} width="100%" padding={2}>
       {sections.map(({ id: sectionId, title, items }, i) => (
         <Grid key={i}>
           <Typography variant="h1" fontWeight={700}>

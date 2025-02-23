@@ -2,9 +2,10 @@
 
 import 'dayjs/locale/ko';
 
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
-import { IconButton, iconButtonClasses, inputClasses } from '@mui/material';
+import Cached from '@mui/icons-material/Cached';
+import { Chip } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import { grey } from '@mui/material/colors';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
@@ -12,77 +13,133 @@ import Typography from '@mui/material/Typography';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker/MobileDatePicker';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { type PropsWithChildren, useState } from 'react';
+
+import { isServer, STORAGE_KEY } from '@/constants';
+import type { TodayClothingData } from '@/types';
+
+import { sections } from '../clothes/_resources/constants';
+import DatePicker from './_resources/components/DatePicker';
+import useCalendar from './_resources/hooks/useCalendar';
+
+function DateCell({ children }: PropsWithChildren) {
+  return (
+    <Box
+      minHeight={100}
+      borderRight={`1px solid ${grey['400']}`}
+      borderBottom={`1px solid ${grey['400']}`}
+      padding={{
+        xs: '15%',
+        md: 2,
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
 
 export default function Page() {
   const [
-    date,
-    setDate,
-  ] = useState<Dayjs>(dayjs().startOf('month'));
+    startDate,
+    setStartDate,
+  ] = useState<Dayjs>(dayjs());
+  const [
+    endDate,
+    setEndDate,
+  ] = useState<Dayjs>(dayjs());
+  const [
+    ootdList,
+    setOotdList,
+  ] = useState<{
+    date: string;
+    clothingList: TodayClothingData[];
+  }[]>([]);
+
+  const { date, calendar, onChange, onPrev, onNext } = useCalendar();
+
+  const storageData: TodayClothingData[] = JSON.parse(isServer ? '[]' : localStorage.getItem(STORAGE_KEY) || '[]');
+  const data = storageData.reduce((result, { sectionId, ...rest }) => (sectionId in result
+    ? {
+        ...result,
+        [sectionId]: [
+          ...result[sectionId],
+          {
+            sectionId,
+            ...rest,
+          },
+        ],
+      }
+    : {
+        ...result,
+        [sectionId]: [
+          {
+            sectionId,
+            ...rest,
+          },
+        ],
+      }), {} as { [sectionId: string]: TodayClothingData[] });
+
+  const ootdMap = ootdList.reduce((result, { date, clothingList }) => ({
+    ...result,
+    [date]: clothingList,
+  }), {} as Record<string, TodayClothingData[]>);
 
   return (
-    <Stack alignItems="center" gap={2} width="100%" padding={3}>
-      <Stack
-        direction="row"
-        alignItems="center"
-        sx={{
-          [`.${iconButtonClasses.root}`]: {
-            padding: 0,
-          },
-        }}
-      >
-        <IconButton
-          onClick={() => {
-            setDate((d) => d.subtract(1, 'month'));
-          }}
-        >
-          <ChevronLeft htmlColor="black" />
-        </IconButton>
-        <MobileDatePicker
-          format="YYYY-MM"
-          openTo="month"
-          views={[
-            'year',
-            'month',
-          ]}
-          slotProps={{
-            textField: {
-              label: null,
-              variant: 'standard',
-              sx: {
-                [`.${inputClasses.root}`]: {
-                  width: 80,
-                  [`.${inputClasses.input}`]: {
-                    textAlign: 'center',
-                    fontWeight: 700,
-                  },
-                  ':hover:not(.Mui-disabled, .Mui-error):before, ::before, ::after': {
-                    borderBottom: 'none',
-                  },
-                },
-              },
-            },
-          }}
-          value={date}
-          onChange={(value) => {
-            if (value) {
-              setDate(value);
-            }
-          }}
-        />
-        <IconButton
-          onClick={() => {
-            setDate((d) => d.add(1, 'month'));
-          }}
-        >
-          <ChevronRight htmlColor="black" />
-        </IconButton>
-      </Stack>
+    <Stack alignItems="center" gap={2} width="100%" padding={2}>
+      <DatePicker
+        date={date}
+        onChange={onChange}
+        onPrev={onPrev}
+        onNext={onNext}
+      />
       <Grid display="grid" gridTemplateColumns="repeat(7, 1fr)" width="100%" borderTop={`1px solid ${grey['400']}`} borderLeft={`1px solid ${grey['400']}`}>
-        {Array(date.startOf('month').day()).fill(1).map((_, i) => {
+        {calendar.map((d, i) => {
+          if (d.isSame(date, 'month')) {
+            return (
+              <DateCell key={i}>
+                {dayjs().isSame(d, 'day')
+                  ? (
+                      <Box
+                        position="relative"
+                        top={-4}
+                        left={-6}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        bgcolor="primary.main"
+                        width={30}
+                        height={30}
+                        borderRadius={99}
+                        sx={{ aspectRatio: 1 }}
+                      >
+                        <Typography color="common.white">{d.format('D')}</Typography>
+                      </Box>
+                    )
+                  : (
+                      <Typography>{d.format('D')}</Typography>
+                    )}
+                {d.format('YYYY-MM-DD') in ootdMap && (
+                  <Stack direction="row" flexWrap="wrap" gap={1}>
+                    {ootdMap[d.format('YYYY-MM-DD')].map((clothing, j) => (
+                      <Chip
+                        key={j}
+                        label={(
+                          <Stack direction="row" alignItems="center" gap={1}>
+                            {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}
+                            <Box bgcolor={clothing.color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
+                          </Stack>
+                        )}
+                      />
+                    ))}
+                  </Stack>
+                )}
+              </DateCell>
+            );
+          }
+
           return (
-            <Box key={i} height={100} borderRight={`1px solid ${grey['400']}`} borderBottom={`1px solid ${grey['400']}`} padding={2}>
-              {dayjs().format('YYYY-MM-DD') === date.startOf('month').subtract(date.startOf('month').day() - i, 'day').format('YYYY-MM-DD')
+            <DateCell key={i}>
+              {dayjs().isSame(d, 'day')
                 ? (
                     <Box
                       position="relative"
@@ -97,70 +154,112 @@ export default function Page() {
                       borderRadius={99}
                       sx={{ aspectRatio: 1 }}
                     >
-                      <Typography color="common.white">
-                        {date.startOf('month').subtract(date.startOf('month').day() - i, 'day').date()}
-                      </Typography>
+                      <Typography color="common.white">{d.format('D')}</Typography>
                     </Box>
                   )
                 : (
-                    <Typography color="textDisabled">
-                      {date.startOf('month').subtract(date.startOf('month').day() - i, 'day').date()}
-                    </Typography>
+                    <Typography color="textDisabled">{d.format('D')}</Typography>
                   )}
-            </Box>
+              {d.format('YYYY-MM-DD') in ootdMap && (
+                <Stack direction="row" flexWrap="wrap" gap={1} sx={{ opacity: 0.5 }}>
+                  {ootdMap[d.format('YYYY-MM-DD')].map((clothing, j) => (
+                    <Chip
+                      key={j}
+                      label={(
+                        <Stack direction="row" alignItems="center" gap={1}>
+                          {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}
+                          <Box bgcolor={clothing.color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
+                        </Stack>
+                      )}
+                    />
+                  ))}
+                </Stack>
+              )}
+            </DateCell>
           );
         })}
-        {Array(date.daysInMonth()).fill(1).map((_, i) => (
-          <Box key={i} height={100} borderRight={`1px solid ${grey['400']}`} borderBottom={`1px solid ${grey['400']}`} padding={2}>
-            {dayjs().format('YYYY-MM-DD') === date.startOf('month').add(i, 'day').format('YYYY-MM-DD')
-              ? (
-                  <Box
-                    position="relative"
-                    top={-4}
-                    left={-6}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    bgcolor="primary.main"
-                    width={30}
-                    height={30}
-                    borderRadius={99}
-                    sx={{ aspectRatio: 1 }}
-                  >
-                    <Typography color="common.white">{i + 1}</Typography>
-                  </Box>
-                )
-              : (
-                  <Typography>{i + 1}</Typography>
-                )}
-          </Box>
-        ))}
-        {Array(6 - date.endOf('month').day()).fill(1).map((_, i) => (
-          <Box key={i} height={100} borderRight={`1px solid ${grey['400']}`} borderBottom={`1px solid ${grey['400']}`} padding={2}>
-            {dayjs().format('YYYY-MM-DD') === date.add(1, 'month').startOf('month').add(i, 'day').format('YYYY-MM-DD')
-              ? (
-                  <Box
-                    position="relative"
-                    top={-4}
-                    left={-6}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    bgcolor={grey['500']}
-                    width={30}
-                    height={30}
-                    borderRadius={99}
-                    sx={{ aspectRatio: 1 }}
-                  >
-                    <Typography color="common.white">{i + 1}</Typography>
-                  </Box>
-                )
-              : (
-                  <Typography color="textDisabled">{i + 1}</Typography>
-                )}
-          </Box>
-        ))}
       </Grid>
+      <Stack direction="column" alignItems="center" gap={1} width="100%">
+        <Box display="flex" alignItems="center" gap={1} width="100%">
+          <Typography variant="h5" fontWeight={700} width={70}>START</Typography>
+          <MobileDatePicker
+            format="YYYY-MM-DD"
+            closeOnSelect
+            value={startDate}
+            onChange={(value) => {
+              if (value) {
+                setStartDate(value);
+                if (value.isAfter(endDate)) {
+                  setEndDate(value);
+                }
+              }
+            }}
+            slotProps={{
+              toolbar: {
+                hidden: true,
+              },
+              actionBar: {
+                hidden: true,
+              },
+              textField: {
+                fullWidth: true,
+                size: 'small',
+                sx: {
+                  flex: 1,
+                },
+              },
+            }}
+          />
+        </Box>
+        <Box display="flex" alignItems="center" gap={1} width="100%">
+          <Typography variant="h5" fontWeight={700} width={70}>END</Typography>
+          <MobileDatePicker
+            format="YYYY-MM-DD"
+            closeOnSelect
+            minDate={startDate}
+            value={endDate}
+            onChange={(value) => {
+              if (value) {
+                setEndDate(value);
+              }
+            }}
+            slotProps={{
+              toolbar: {
+                hidden: true,
+              },
+              actionBar: {
+                hidden: true,
+              },
+              textField: {
+                fullWidth: true,
+                size: 'small',
+                sx: {
+                  flex: 1,
+                },
+              },
+            }}
+          />
+        </Box>
+        <Button
+          fullWidth
+          variant="contained"
+          endIcon={<Cached />}
+          onClick={() => {
+            const list = [];
+            for (let d = startDate; d.isBefore(endDate) || d.isSame(endDate); d = d.add(1, 'day')) {
+              list.push({
+                date: d.format('YYYY-MM-DD'),
+                clothingList: Object
+                  .entries(data)
+                  .map(([, clothingList]) => clothingList[Math.round(Math.random() * 100) % clothingList.length]),
+              });
+            }
+            setOotdList(list);
+          }}
+        >
+          OOTD 생성
+        </Button>
+      </Stack>
     </Stack>
   );
 }
