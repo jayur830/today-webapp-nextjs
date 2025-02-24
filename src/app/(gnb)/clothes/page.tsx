@@ -35,13 +35,13 @@ export default function Page() {
   const [
     savedData,
     setSavedData,
-  ] = useState<TodayClothingData[]>(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+  ] = useState<TodayClothingData[]>(JSON.parse(typeof window === 'undefined' ? '[]' : localStorage.getItem(STORAGE_KEY) || '[]'));
 
   return (
     <Stack divider={<Divider />} gap={5} width="100%" padding={2}>
       {sections.map(({ id: sectionId, title, items }, i) => (
         <Grid key={i}>
-          <Typography variant="h1" fontWeight={700}>
+          <Typography variant="h3" fontWeight={700}>
             {title}
           </Typography>
           <Stack direction="row" flexWrap="wrap" gap={2} marginTop={2} marginBottom={3}>

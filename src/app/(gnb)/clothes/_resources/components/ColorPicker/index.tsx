@@ -26,6 +26,7 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
     <>
       <Button
         fullWidth
+        variant="text"
         disableRipple
         onClick={(e) => {
           setAnchorEl(e.currentTarget);
