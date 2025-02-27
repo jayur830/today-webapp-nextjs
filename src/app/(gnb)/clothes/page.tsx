@@ -7,6 +7,7 @@ import grey from '@mui/material/colors/grey';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
@@ -21,22 +22,33 @@ export default function Page() {
   const [
     data,
     setData,
-  ] = useState(() => sections.reduce((result, { id: sectionId, items }) => ({
-    ...result,
-    [sectionId]: {
-      selected: items[0].id,
-      color: '#FFFFFF',
-    },
-  }), {} as {
-    [sectionId in (typeof sections)[number]['id']]: {
-      selected: (typeof sections)[number]['items'][number]['id'];
-      color: `#${string}`;
-    };
-  }));
+  ] = useState(() =>
+    sections.reduce(
+      (result, { id: sectionId, items }) => ({
+        ...result,
+        [sectionId]: {
+          selected: items[0].id,
+          color: '#FFFFFF',
+        },
+      }),
+      {} as {
+        [sectionId in (typeof sections)[number]['id']]: {
+          selected: (typeof sections)[number]['items'][number]['id'];
+          color: `#${string}`;
+        };
+      },
+    ),
+  );
   const [
     savedData,
     setSavedData,
-  ] = useState<TodayClothingData[]>(JSON.parse(typeof window === 'undefined' ? '[]' : localStorage.getItem(STORAGE_KEY) || '[]'));
+  ] = useState<TodayClothingData[]>(
+    JSON.parse(
+      typeof window === 'undefined'
+        ? '[]'
+        : localStorage.getItem(STORAGE_KEY) || '[]',
+    ),
+  );
 
   return (
     <Stack divider={<Divider />} gap={5} width="100%" padding={2}>
@@ -45,12 +57,22 @@ export default function Page() {
           <Typography variant="h3" fontWeight={700}>
             {title}
           </Typography>
-          <Stack direction="row" flexWrap="wrap" gap={2} marginTop={2} marginBottom={3}>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            gap={2}
+            marginTop={2}
+            marginBottom={3}
+          >
             {items.map(({ id, title }, j) => (
               <Chip
                 key={j}
                 label={title}
-                color={data[sectionId as keyof typeof data].selected === id ? 'primary' : 'default'}
+                color={
+                  data[sectionId as keyof typeof data].selected === id
+                    ? 'primary'
+                    : 'default'
+                }
                 onClick={() => {
                   setData((state) => ({
                     ...state,
@@ -63,6 +85,7 @@ export default function Page() {
               />
             ))}
           </Stack>
+          <TextField type="color" />
           <ColorPicker
             value={data[sectionId].color || '#FFFFFF'}
             onChange={(color) => {
@@ -98,7 +121,9 @@ export default function Page() {
           >
             추가
           </Button>
-          <Typography variant="h4" fontWeight={700} marginY={2}>목록</Typography>
+          <Typography variant="h4" fontWeight={700} marginY={2}>
+            목록
+          </Typography>
           <Stack
             direction="row"
             flexWrap="wrap"
@@ -111,21 +136,39 @@ export default function Page() {
               borderStyle: 'solid',
             }}
           >
-            {savedData.filter(({ sectionId: targetSectionId }) => sectionId === targetSectionId)
+            {savedData
+              .filter(
+                ({ sectionId: targetSectionId }) =>
+                  sectionId === targetSectionId,
+              )
               .map(({ sectionId, clothingId, color }, i) => (
                 <Chip
                   key={i}
                   label={(
                     <Stack direction="row" alignItems="center" gap={1}>
-                      {(sections.find(({ id }) => sectionId === id)?.items || []).find(({ id }) => id === clothingId)?.title || ''}
-                      <Box bgcolor={color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
+                      {(
+                        sections.find(({ id }) => sectionId === id)?.items || []
+                      ).find(({ id }) => id === clothingId)?.title || ''}
+                      <Box
+                        bgcolor={color}
+                        width={16}
+                        border={`1px solid ${grey['400']}`}
+                        borderRadius={1}
+                        sx={{ aspectRatio: 1 }}
+                      />
                     </Stack>
                   )}
                   onDelete={() => {
                     const filteredData = savedData.filter((item) => {
-                      return sectionId !== item.sectionId || clothingId !== item.clothingId;
+                      return (
+                        sectionId !== item.sectionId
+                        || clothingId !== item.clothingId
+                      );
                     });
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredData));
+                    localStorage.setItem(
+                      STORAGE_KEY,
+                      JSON.stringify(filteredData),
+                    );
                     setSavedData(filteredData);
                     toast.success('의류가 삭제되었습니다.');
                   }}
