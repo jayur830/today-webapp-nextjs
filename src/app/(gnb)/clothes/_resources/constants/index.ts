@@ -1,4 +1,22 @@
-import { amber, blue, blueGrey, brown, cyan, deepOrange, deepPurple, green, grey, indigo, lightBlue, lightGreen, lime, orange, pink, purple, red, teal, yellow } from '@mui/material/colors';
+import amber from '@mui/material/colors/amber';
+import blue from '@mui/material/colors/blue';
+import blueGrey from '@mui/material/colors/blueGrey';
+import brown from '@mui/material/colors/brown';
+import cyan from '@mui/material/colors/cyan';
+import deepOrange from '@mui/material/colors/deepOrange';
+import deepPurple from '@mui/material/colors/deepPurple';
+import green from '@mui/material/colors/green';
+import grey from '@mui/material/colors/grey';
+import indigo from '@mui/material/colors/indigo';
+import lightBlue from '@mui/material/colors/lightBlue';
+import lightGreen from '@mui/material/colors/lightGreen';
+import lime from '@mui/material/colors/lime';
+import orange from '@mui/material/colors/orange';
+import pink from '@mui/material/colors/pink';
+import purple from '@mui/material/colors/purple';
+import red from '@mui/material/colors/red';
+import teal from '@mui/material/colors/teal';
+import yellow from '@mui/material/colors/yellow';
 
 export const sections = [
   {

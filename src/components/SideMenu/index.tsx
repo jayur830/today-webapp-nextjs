@@ -2,9 +2,14 @@
 
 import CalendarMonth from '@mui/icons-material/CalendarMonth';
 import Checkroom from '@mui/icons-material/Checkroom';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, svgIconClasses, typographyClasses } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { svgIconClasses } from '@mui/material/SvgIcon';
+import { typographyClasses } from '@mui/material/Typography';
 import { usePathname } from 'next/navigation';
 
 const navigations = [

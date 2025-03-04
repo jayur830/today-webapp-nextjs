@@ -1,7 +1,13 @@
 'use client';
 
-import { bottomNavigationActionClasses } from '@mui/material';
-import { blueGrey, deepOrange, grey, indigo, lightGreen, lime, red } from '@mui/material/colors';
+import { bottomNavigationActionClasses } from '@mui/material/BottomNavigationAction';
+import blueGrey from '@mui/material/colors/blueGrey';
+import deepOrange from '@mui/material/colors/deepOrange';
+import grey from '@mui/material/colors/grey';
+import indigo from '@mui/material/colors/indigo';
+import lightGreen from '@mui/material/colors/lightGreen';
+import lime from '@mui/material/colors/lime';
+import red from '@mui/material/colors/red';
 import createPalette from '@mui/material/styles/createPalette';
 import createTheme from '@mui/material/styles/createTheme';
 import createTypography from '@mui/material/styles/createTypography';

@@ -3,17 +3,18 @@
 import 'dayjs/locale/ko';
 
 import Cached from '@mui/icons-material/Cached';
-import { Chip } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { grey } from '@mui/material/colors';
+import Chip from '@mui/material/Chip';
+import grey from '@mui/material/colors/grey';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker/MobileDatePicker';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { type PropsWithChildren, useState } from 'react';
+import type { PropsWithChildren } from 'react';
+import { useState } from 'react';
 
 import { isServer, STORAGE_KEY } from '@/constants';
 import type { TodayClothingData } from '@/types';
