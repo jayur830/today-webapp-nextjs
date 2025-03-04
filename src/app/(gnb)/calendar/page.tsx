@@ -92,7 +92,7 @@ export default function Page() {
         onPrev={onPrev}
         onNext={onNext}
       />
-      <Grid display="grid" gridTemplateColumns="repeat(7, 1fr)" width="100%" borderTop={`1px solid ${grey['400']}`} borderLeft={`1px solid ${grey['400']}`}>
+      <Grid display="grid" gridTemplateColumns="repeat(7, 1fr)" width="100%" maxWidth={1024} borderTop={`1px solid ${grey['400']}`} borderLeft={`1px solid ${grey['400']}`}>
         {calendar.map((d, i) => {
           if (d.isSame(date, 'month')) {
             return (

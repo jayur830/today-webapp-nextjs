@@ -5,6 +5,7 @@ import { blueGrey, deepOrange, grey, indigo, lightGreen, lime, red } from '@mui/
 import createPalette from '@mui/material/styles/createPalette';
 import createTheme from '@mui/material/styles/createTheme';
 import createTypography from '@mui/material/styles/createTypography';
+import Link from 'next/link';
 
 import { fonts } from '@/assets/fonts';
 
@@ -47,7 +48,7 @@ export const palette = createPalette({
   text: {
     primary: '#1D1E1F',
     secondary: grey['900'],
-    disabled: grey['A700'],
+    disabled: grey['400'],
   },
 });
 
@@ -97,6 +98,7 @@ export const theme = createTheme({
     MuiButton: {
       defaultProps: {
         variant: 'contained',
+        LinkComponent: Link,
       },
       styleOverrides: {
         root: {
@@ -105,6 +107,11 @@ export const theme = createTheme({
             boxShadow: 'none',
           },
         },
+      },
+    },
+    MuiListItemButton: {
+      defaultProps: {
+        LinkComponent: Link,
       },
     },
     MuiChip: {

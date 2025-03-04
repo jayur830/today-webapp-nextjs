@@ -4,7 +4,6 @@ import CalendarMonth from '@mui/icons-material/CalendarMonth';
 import Checkroom from '@mui/icons-material/Checkroom';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navigations = [
@@ -30,6 +29,10 @@ export default function BottomNavigationBar() {
       sx={{
         position: 'fixed',
         bottom: 0,
+        display: {
+          xs: 'flex',
+          md: 'none',
+        },
         width: '100%',
         height: 60,
         boxShadow: '0 -5px 15px 0 rgba(0, 0, 0, 0.2)',
@@ -41,7 +44,7 @@ export default function BottomNavigationBar() {
         },
       }}
     >
-      {navigations.map((props, i) => <BottomNavigationAction key={i} LinkComponent={Link} {...props} />)}
+      {navigations.map((props, i) => <BottomNavigationAction key={i} {...props} />)}
     </BottomNavigation>
   );
 }
