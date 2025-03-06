@@ -7,38 +7,21 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import grey from '@mui/material/colors/grey';
-import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker/MobileDatePicker';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 
 import { isServer, STORAGE_KEY, STORAGE_KEY_OOTD } from '@/constants';
 import type { OotdType, TodayClothingData } from '@/types';
 
 import { sections } from '../clothes/_resources/constants';
+import Calendar from './_resources/components/Calendar';
 import DatePicker from './_resources/components/DatePicker';
 import useCalendar from './_resources/hooks/useCalendar';
 import { getOOTD, mergeOOTD } from './_resources/utils';
-
-function DateCell({ children }: PropsWithChildren) {
-  return (
-    <Box
-      minHeight={100}
-      borderRight={`1px solid ${grey['400']}`}
-      borderBottom={`1px solid ${grey['400']}`}
-      padding={{
-        xs: '15%',
-        md: 2,
-      }}
-    >
-      {children}
-    </Box>
-  );
-}
 
 export default function Page() {
   const [
@@ -94,93 +77,31 @@ export default function Page() {
         onPrev={onPrev}
         onNext={onNext}
       />
-      <Grid display="grid" gridTemplateColumns="repeat(7, 1fr)" width="100%" maxWidth={1024} borderTop={`1px solid ${grey['400']}`} borderLeft={`1px solid ${grey['400']}`}>
-        {calendar.map((d, i) => {
-          if (d.isSame(date, 'month')) {
+      <Calendar
+        calendarList={calendar}
+        today={date}
+        renderCell={(date) => {
+          if (date.format('YYYY-MM-DD') in ootdMap) {
             return (
-              <DateCell key={i}>
-                {dayjs().isSame(d, 'day')
-                  ? (
-                      <Box
-                        position="relative"
-                        top={-4}
-                        left={-6}
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        bgcolor="primary.main"
-                        width={30}
-                        height={30}
-                        borderRadius={99}
-                        sx={{ aspectRatio: 1 }}
-                      >
-                        <Typography color="common.white">{d.format('D')}</Typography>
-                      </Box>
-                    )
-                  : (
-                      <Typography>{d.format('D')}</Typography>
+              <Stack direction="row" flexWrap="wrap" gap={1}>
+                {ootdMap[date.format('YYYY-MM-DD')].map((clothing, j) => (
+                  <Chip
+                    key={j}
+                    label={(
+                      <Stack direction="row" alignItems="center" gap={1}>
+                        {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}
+                        <Box bgcolor={clothing.color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
+                      </Stack>
                     )}
-                {d.format('YYYY-MM-DD') in ootdMap && (
-                  <Stack direction="row" flexWrap="wrap" gap={1}>
-                    {ootdMap[d.format('YYYY-MM-DD')].map((clothing, j) => (
-                      <Chip
-                        key={j}
-                        label={(
-                          <Stack direction="row" alignItems="center" gap={1}>
-                            {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}
-                            <Box bgcolor={clothing.color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
-                          </Stack>
-                        )}
-                      />
-                    ))}
-                  </Stack>
-                )}
-              </DateCell>
+                  />
+                ))}
+              </Stack>
             );
           }
 
-          return (
-            <DateCell key={i}>
-              {dayjs().isSame(d, 'day')
-                ? (
-                    <Box
-                      position="relative"
-                      top={-4}
-                      left={-6}
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      bgcolor={grey['500']}
-                      width={30}
-                      height={30}
-                      borderRadius={99}
-                      sx={{ aspectRatio: 1 }}
-                    >
-                      <Typography color="common.white">{d.format('D')}</Typography>
-                    </Box>
-                  )
-                : (
-                    <Typography color="textDisabled">{d.format('D')}</Typography>
-                  )}
-              {d.format('YYYY-MM-DD') in ootdMap && (
-                <Stack direction="row" flexWrap="wrap" gap={1} sx={{ opacity: 0.5 }}>
-                  {ootdMap[d.format('YYYY-MM-DD')].map((clothing, j) => (
-                    <Chip
-                      key={j}
-                      label={(
-                        <Stack direction="row" alignItems="center" gap={1}>
-                          {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}
-                          <Box bgcolor={clothing.color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
-                        </Stack>
-                      )}
-                    />
-                  ))}
-                </Stack>
-              )}
-            </DateCell>
-          );
-        })}
-      </Grid>
+          return null;
+        }}
+      />
       <Stack direction="column" alignItems="center" gap={1} width="100%">
         <Box display="flex" alignItems="center" gap={1} width="100%">
           <Typography variant="h5" fontWeight={700} width={70}>START</Typography>
