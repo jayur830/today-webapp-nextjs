@@ -16,12 +16,13 @@ import dayjs from 'dayjs';
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 
-import { isServer, STORAGE_KEY } from '@/constants';
+import { isServer, STORAGE_KEY, STORAGE_KEY_OOTD } from '@/constants';
 import type { TodayClothingData } from '@/types';
 
 import { sections } from '../clothes/_resources/constants';
 import DatePicker from './_resources/components/DatePicker';
 import useCalendar from './_resources/hooks/useCalendar';
+import { getOOTD } from './_resources/utils';
 
 function DateCell({ children }: PropsWithChildren) {
   return (
@@ -54,7 +55,7 @@ export default function Page() {
   ] = useState<{
     date: string;
     clothingList: TodayClothingData[];
-  }[]>([]);
+  }[]>(JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]'));
 
   const { date, calendar, onChange, onPrev, onNext } = useCalendar();
 
@@ -246,15 +247,8 @@ export default function Page() {
           variant="contained"
           endIcon={<Cached />}
           onClick={() => {
-            const list = [];
-            for (let d = startDate; d.isBefore(endDate) || d.isSame(endDate); d = d.add(1, 'day')) {
-              list.push({
-                date: d.format('YYYY-MM-DD'),
-                clothingList: Object
-                  .entries(data)
-                  .map(([, clothingList]) => clothingList[Math.round(Math.random() * 100) % clothingList.length]),
-              });
-            }
+            const list = getOOTD(data, startDate, endDate);
+            localStorage.setItem(STORAGE_KEY_OOTD, JSON.stringify(list));
             setOotdList(list);
           }}
         >

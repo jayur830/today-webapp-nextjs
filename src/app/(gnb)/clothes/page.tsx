@@ -7,7 +7,6 @@ import grey from '@mui/material/colors/grey';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
@@ -85,7 +84,6 @@ export default function Page() {
               />
             ))}
           </Stack>
-          <TextField type="color" />
           <ColorPicker
             value={data[sectionId].color || '#FFFFFF'}
             onChange={(color) => {
