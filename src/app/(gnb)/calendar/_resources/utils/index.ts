@@ -2,6 +2,29 @@ import type { Dayjs, ManipulateType } from 'dayjs';
 
 import type { OotdType, TodayClothingData } from '@/types';
 
+export function groupBySectionId(data: TodayClothingData[]) {
+  return data.reduce((result, { sectionId, ...rest }) => (sectionId in result
+    ? {
+        ...result,
+        [sectionId]: [
+          ...result[sectionId],
+          {
+            sectionId,
+            ...rest,
+          },
+        ],
+      }
+    : {
+        ...result,
+        [sectionId]: [
+          {
+            sectionId,
+            ...rest,
+          },
+        ],
+      }), {} as { [sectionId: string]: TodayClothingData[] });
+}
+
 /**
  * startDate ~ endDate 날짜 범위의 OOTD 생성
  *

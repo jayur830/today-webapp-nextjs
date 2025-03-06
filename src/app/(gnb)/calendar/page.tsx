@@ -21,7 +21,7 @@ import { sections } from '../clothes/_resources/constants';
 import Calendar from './_resources/components/Calendar';
 import DatePicker from './_resources/components/DatePicker';
 import useCalendar from './_resources/hooks/useCalendar';
-import { getOOTD, mergeOOTD } from './_resources/utils';
+import { getOOTD, groupBySectionId, mergeOOTD } from './_resources/utils';
 
 export default function Page() {
   const [
@@ -35,34 +35,12 @@ export default function Page() {
   const [
     ootdList,
     setOotdList,
-  ] = useState<{
-    date: string;
-    clothingList: TodayClothingData[];
-  }[]>(JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]'));
+  ] = useState<OotdType[]>(JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]'));
 
   const { date, calendar, onChange, onPrev, onNext } = useCalendar();
 
   const storageData: TodayClothingData[] = JSON.parse(isServer ? '[]' : localStorage.getItem(STORAGE_KEY) || '[]');
-  const data = storageData.reduce((result, { sectionId, ...rest }) => (sectionId in result
-    ? {
-        ...result,
-        [sectionId]: [
-          ...result[sectionId],
-          {
-            sectionId,
-            ...rest,
-          },
-        ],
-      }
-    : {
-        ...result,
-        [sectionId]: [
-          {
-            sectionId,
-            ...rest,
-          },
-        ],
-      }), {} as { [sectionId: string]: TodayClothingData[] });
+  const data = groupBySectionId(storageData);
 
   const ootdMap = ootdList.reduce((result, { date, clothingList }) => ({
     ...result,
