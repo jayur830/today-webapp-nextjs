@@ -17,12 +17,12 @@ import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 
 import { isServer, STORAGE_KEY, STORAGE_KEY_OOTD } from '@/constants';
-import type { TodayClothingData } from '@/types';
+import type { OotdType, TodayClothingData } from '@/types';
 
 import { sections } from '../clothes/_resources/constants';
 import DatePicker from './_resources/components/DatePicker';
 import useCalendar from './_resources/hooks/useCalendar';
-import { getOOTD } from './_resources/utils';
+import { getOOTD, mergeOOTD } from './_resources/utils';
 
 function DateCell({ children }: PropsWithChildren) {
   return (
@@ -247,9 +247,13 @@ export default function Page() {
           variant="contained"
           endIcon={<Cached />}
           onClick={() => {
-            const list = getOOTD(data, startDate, endDate);
-            localStorage.setItem(STORAGE_KEY_OOTD, JSON.stringify(list));
-            setOotdList(list);
+            const oldList: OotdType[] = JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]');
+            const newList = getOOTD(data, startDate, endDate);
+            const mergedList = mergeOOTD(oldList, newList);
+            console.log(mergedList);
+
+            localStorage.setItem(STORAGE_KEY_OOTD, JSON.stringify(mergedList));
+            setOotdList(mergedList);
           }}
         >
           OOTD 생성

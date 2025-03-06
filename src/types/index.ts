@@ -3,3 +3,8 @@ export interface TodayClothingData {
   clothingId: string;
   color: string;
 }
+
+export interface OotdType {
+  date: string;
+  clothingList: TodayClothingData[];
+}
