@@ -24,37 +24,26 @@ import useCalendar from './_resources/hooks/useCalendar';
 import { getOOTD, groupBySectionId, mergeOOTD } from './_resources/utils';
 
 export default function Page() {
-  const [
-    startDate,
-    setStartDate,
-  ] = useState<Dayjs>(dayjs());
-  const [
-    endDate,
-    setEndDate,
-  ] = useState<Dayjs>(dayjs());
-  const [
-    ootdList,
-    setOotdList,
-  ] = useState<OotdType[]>(JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]'));
+  const [startDate, setStartDate] = useState<Dayjs>(dayjs());
+  const [endDate, setEndDate] = useState<Dayjs>(dayjs());
+  const [ootdList, setOotdList] = useState<OotdType[]>(JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]'));
 
   const { date, calendar, onChange, onPrev, onNext } = useCalendar();
 
   const storageData: TodayClothingData[] = JSON.parse(isServer ? '[]' : localStorage.getItem(STORAGE_KEY) || '[]');
   const data = groupBySectionId(storageData);
 
-  const ootdMap = ootdList.reduce((result, { date, clothingList }) => ({
-    ...result,
-    [date]: clothingList,
-  }), {} as Record<string, TodayClothingData[]>);
+  const ootdMap = ootdList.reduce(
+    (result, { date, clothingList }) => ({
+      ...result,
+      [date]: clothingList,
+    }),
+    {} as Record<string, TodayClothingData[]>,
+  );
 
   return (
     <Stack alignItems="center" gap={2} width="100%" padding={2}>
-      <DatePicker
-        date={date}
-        onChange={onChange}
-        onPrev={onPrev}
-        onNext={onNext}
-      />
+      <DatePicker date={date} onChange={onChange} onPrev={onPrev} onNext={onNext} />
       <Calendar
         calendarList={calendar}
         today={date}
@@ -65,12 +54,12 @@ export default function Page() {
                 {ootdMap[date.format('YYYY-MM-DD')].map((clothing, j) => (
                   <Chip
                     key={j}
-                    label={(
+                    label={
                       <Stack direction="row" alignItems="center" gap={1}>
                         {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}
                         <Box bgcolor={clothing.color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
                       </Stack>
-                    )}
+                    }
                   />
                 ))}
               </Stack>
@@ -82,7 +71,9 @@ export default function Page() {
       />
       <Stack direction="column" alignItems="center" gap={1} width="100%">
         <Box display="flex" alignItems="center" gap={1} width="100%">
-          <Typography variant="h5" fontWeight={700} width={70}>START</Typography>
+          <Typography variant="h5" fontWeight={700} width={70}>
+            START
+          </Typography>
           <MobileDatePicker
             format="YYYY-MM-DD"
             closeOnSelect
@@ -113,7 +104,9 @@ export default function Page() {
           />
         </Box>
         <Box display="flex" alignItems="center" gap={1} width="100%">
-          <Typography variant="h5" fontWeight={700} width={70}>END</Typography>
+          <Typography variant="h5" fontWeight={700} width={70}>
+            END
+          </Typography>
           <MobileDatePicker
             format="YYYY-MM-DD"
             closeOnSelect

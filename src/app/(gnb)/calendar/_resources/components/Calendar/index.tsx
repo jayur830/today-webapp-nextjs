@@ -38,27 +38,25 @@ export default function Calendar({ calendarList, today, renderCell }: CalendarPr
         if (d.isSame(today, 'month')) {
           return (
             <DateCell key={i}>
-              {dayjs().isSame(d, 'day')
-                ? (
-                    <Box
-                      position="relative"
-                      top={-4}
-                      left={-6}
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      bgcolor="primary.main"
-                      width={30}
-                      height={30}
-                      borderRadius={99}
-                      sx={{ aspectRatio: 1 }}
-                    >
-                      <Typography color="common.white">{d.format('D')}</Typography>
-                    </Box>
-                  )
-                : (
-                    <Typography>{d.format('D')}</Typography>
-                  )}
+              {dayjs().isSame(d, 'day') ? (
+                <Box
+                  position="relative"
+                  top={-4}
+                  left={-6}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  bgcolor="primary.main"
+                  width={30}
+                  height={30}
+                  borderRadius={99}
+                  sx={{ aspectRatio: 1 }}
+                >
+                  <Typography color="common.white">{d.format('D')}</Typography>
+                </Box>
+              ) : (
+                <Typography>{d.format('D')}</Typography>
+              )}
               {renderCell(d)}
             </DateCell>
           );
@@ -66,27 +64,25 @@ export default function Calendar({ calendarList, today, renderCell }: CalendarPr
 
         return (
           <DateCell key={i}>
-            {dayjs().isSame(d, 'day')
-              ? (
-                  <Box
-                    position="relative"
-                    top={-4}
-                    left={-6}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    bgcolor={grey['500']}
-                    width={30}
-                    height={30}
-                    borderRadius={99}
-                    sx={{ aspectRatio: 1 }}
-                  >
-                    <Typography color="common.white">{d.format('D')}</Typography>
-                  </Box>
-                )
-              : (
-                  <Typography color="textDisabled">{d.format('D')}</Typography>
-                )}
+            {dayjs().isSame(d, 'day') ? (
+              <Box
+                position="relative"
+                top={-4}
+                left={-6}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={grey['500']}
+                width={30}
+                height={30}
+                borderRadius={99}
+                sx={{ aspectRatio: 1 }}
+              >
+                <Typography color="common.white">{d.format('D')}</Typography>
+              </Box>
+            ) : (
+              <Typography color="textDisabled">{d.format('D')}</Typography>
+            )}
             {renderCell(d)}
           </DateCell>
         );

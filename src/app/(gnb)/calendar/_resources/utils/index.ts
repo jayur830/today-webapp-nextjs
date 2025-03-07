@@ -3,26 +3,30 @@ import type { Dayjs, ManipulateType } from 'dayjs';
 import type { OotdType, TodayClothingData } from '@/types';
 
 export function groupBySectionId(data: TodayClothingData[]) {
-  return data.reduce((result, { sectionId, ...rest }) => (sectionId in result
-    ? {
-        ...result,
-        [sectionId]: [
-          ...result[sectionId],
-          {
-            sectionId,
-            ...rest,
+  return data.reduce(
+    (result, { sectionId, ...rest }) =>
+      sectionId in result
+        ? {
+            ...result,
+            [sectionId]: [
+              ...result[sectionId],
+              {
+                sectionId,
+                ...rest,
+              },
+            ],
+          }
+        : {
+            ...result,
+            [sectionId]: [
+              {
+                sectionId,
+                ...rest,
+              },
+            ],
           },
-        ],
-      }
-    : {
-        ...result,
-        [sectionId]: [
-          {
-            sectionId,
-            ...rest,
-          },
-        ],
-      }), {} as { [sectionId: string]: TodayClothingData[] });
+    {} as { [sectionId: string]: TodayClothingData[] },
+  );
 }
 
 /**
@@ -35,9 +39,7 @@ export function getOOTD(data: { [sectionId: string]: TodayClothingData[] }, star
   for (let d = startDate; d.isBefore(endDate) || d.isSame(endDate); d = d.add(1, unit)) {
     list.push({
       date: d.format('YYYY-MM-DD'),
-      clothingList: Object
-        .entries(data)
-        .map(([, clothingList]) => clothingList[Math.round(Math.random() * 100) % clothingList.length]),
+      clothingList: Object.entries(data).map(([, clothingList]) => clothingList[Math.round(Math.random() * 100) % clothingList.length]),
     });
   }
   return list;
@@ -54,25 +56,16 @@ export function getOOTD(data: { [sectionId: string]: TodayClothingData[] }, star
  */
 export function mergeOOTD(oldList: OotdType[], newList: OotdType[]): OotdType[] {
   // `oldList`와 `newList`를 합친 후, 날짜별로 그룹화하여 각 날짜의 `clothingList`를 Map으로 누적합니다.
-  const mergedMap = [
-    ...oldList,
-    ...newList,
-  ].reduce(
-    (acc, { date, clothingList }) => {
-      const clothingMap = acc.get(date) || new Map<string, TodayClothingData>();
-      // 동일 `sectionId`의 항목은 새 항목으로 덮어씁니다.
-      clothingList.forEach((item) => clothingMap.set(item.sectionId, item));
-      return acc.set(date, clothingMap);
-    },
-    new Map<string, Map<string, TodayClothingData>>(),
-  );
+  const mergedMap = [...oldList, ...newList].reduce((acc, { date, clothingList }) => {
+    const clothingMap = acc.get(date) || new Map<string, TodayClothingData>();
+    // 동일 `sectionId`의 항목은 새 항목으로 덮어씁니다.
+    clothingList.forEach((item) => clothingMap.set(item.sectionId, item));
+    return acc.set(date, clothingMap);
+  }, new Map<string, Map<string, TodayClothingData>>());
 
   // Map의 데이터를 `OotdType` 배열로 변환하고, 날짜순으로 정렬합니다.
   return Array.from(mergedMap.entries())
-    .map(([
-      date,
-      clothingMap,
-    ]) => ({
+    .map(([date, clothingMap]) => ({
       date,
       clothingList: Array.from(clothingMap.values()),
     }))

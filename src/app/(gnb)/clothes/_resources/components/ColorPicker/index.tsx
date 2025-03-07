@@ -17,10 +17,7 @@ export interface ColorPickerProps {
 }
 
 export default function ColorPicker({ value, onChange }: ColorPickerProps) {
-  const [
-    anchorEl,
-    setAnchorEl,
-  ] = useState<HTMLButtonElement | null | undefined>();
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null | undefined>();
 
   return (
     <>
@@ -45,16 +42,7 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
           slotProps={{
             input: {
               readOnly: true,
-              startAdornment: (
-                <Box
-                  bgcolor={value}
-                  width={20}
-                  border={`1px solid ${grey['400']}`}
-                  borderRadius={1}
-                  marginRight={1}
-                  sx={{ aspectRatio: 1 }}
-                />
-              ),
+              startAdornment: <Box bgcolor={value} width={20} border={`1px solid ${grey['400']}`} borderRadius={1} marginRight={1} sx={{ aspectRatio: 1 }} />,
               sx: {
                 cursor: 'pointer',
                 '.MuiInputBase-input': {
@@ -89,10 +77,7 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
         }}
       >
         <Stack direction="row" gap={1}>
-          {[
-            '#FFFFFF',
-            '#000000',
-          ].map((color, i) => (
+          {['#FFFFFF', '#000000'].map((color, i) => (
             <Button
               key={i}
               onClick={() => {
@@ -105,13 +90,7 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
                 padding: 0,
               }}
             >
-              <Box
-                bgcolor={color}
-                width={20}
-                border={`1px solid ${grey['400']}`}
-                borderRadius={1}
-                sx={{ aspectRatio: 1 }}
-              />
+              <Box bgcolor={color} width={20} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
             </Button>
           ))}
         </Stack>
@@ -129,13 +108,7 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
                 padding: 0,
               }}
             >
-              <Box
-                bgcolor={color}
-                width={20}
-                border={`1px solid ${grey['400']}`}
-                borderRadius={1}
-                sx={{ aspectRatio: 1 }}
-              />
+              <Box bgcolor={color} width={20} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
             </Button>
           ))}
         </Grid>

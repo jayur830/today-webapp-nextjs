@@ -20,6 +20,6 @@ export const config = {
      * - *.svg, *.png (Image files)
      * - mockServiceWorker.js (MSW Worker file)
      */
-    '/((?!api|_next|favicon.ico|manifest.webmanifest|.*\.svg$|.*\.png$|mockServiceWorker.js).*)',
+    '/((?!api|_next|favicon.ico|manifest.webmanifest|.*.svg$|.*.png$|mockServiceWorker.js).*)',
   ],
 };

@@ -32,10 +32,7 @@ export default function DatePicker({ date, onChange, onPrev, onNext }: DatePicke
       <MobileDatePicker
         format="YYYY-MM"
         openTo="month"
-        views={[
-          'year',
-          'month',
-        ]}
+        views={['year', 'month']}
         value={date}
         onChange={(value) => {
           if (value) {

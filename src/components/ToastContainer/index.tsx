@@ -8,17 +8,11 @@ import type { ToastMessage } from './toast';
 import { toast } from './toast';
 
 export default function ToastContainer() {
-  const [
-    toasts,
-    setToasts,
-  ] = useState<ToastMessage[]>([]);
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   useEffect(() => {
     return toast.subscribe((newToast) => {
-      setToasts((prevToasts) => [
-        ...prevToasts,
-        newToast,
-      ]);
+      setToasts((prevToasts) => [...prevToasts, newToast]);
     });
   }, []);
 
@@ -37,11 +31,7 @@ export default function ToastContainer() {
         horizontal: 'center',
       }}
     >
-      <Alert
-        onClose={() => handleClose(toastItem.id)}
-        severity={toastItem.severity}
-        variant="standard"
-      >
+      <Alert onClose={() => handleClose(toastItem.id)} severity={toastItem.severity} variant="standard">
         {toastItem.message}
       </Alert>
     </Snackbar>

@@ -18,10 +18,7 @@ import ColorPicker from './_resources/components/ColorPicker';
 import { sections } from './_resources/constants';
 
 export default function Page() {
-  const [
-    data,
-    setData,
-  ] = useState(() =>
+  const [data, setData] = useState(() =>
     sections.reduce(
       (result, { id: sectionId, items }) => ({
         ...result,
@@ -38,16 +35,7 @@ export default function Page() {
       },
     ),
   );
-  const [
-    savedData,
-    setSavedData,
-  ] = useState<TodayClothingData[]>(
-    JSON.parse(
-      typeof window === 'undefined'
-        ? '[]'
-        : localStorage.getItem(STORAGE_KEY) || '[]',
-    ),
-  );
+  const [savedData, setSavedData] = useState<TodayClothingData[]>(JSON.parse(typeof window === 'undefined' ? '[]' : localStorage.getItem(STORAGE_KEY) || '[]'));
 
   return (
     <Stack divider={<Divider />} gap={5} width="100%" padding={2}>
@@ -56,22 +44,12 @@ export default function Page() {
           <Typography variant="h3" fontWeight={700}>
             {title}
           </Typography>
-          <Stack
-            direction="row"
-            flexWrap="wrap"
-            gap={2}
-            marginTop={2}
-            marginBottom={3}
-          >
+          <Stack direction="row" flexWrap="wrap" gap={2} marginTop={2} marginBottom={3}>
             {items.map(({ id, title }, j) => (
               <Chip
                 key={j}
                 label={title}
-                color={
-                  data[sectionId as keyof typeof data].selected === id
-                    ? 'primary'
-                    : 'default'
-                }
+                color={data[sectionId as keyof typeof data].selected === id ? 'primary' : 'default'}
                 onClick={() => {
                   setData((state) => ({
                     ...state,
@@ -135,38 +113,21 @@ export default function Page() {
             }}
           >
             {savedData
-              .filter(
-                ({ sectionId: targetSectionId }) =>
-                  sectionId === targetSectionId,
-              )
+              .filter(({ sectionId: targetSectionId }) => sectionId === targetSectionId)
               .map(({ sectionId, clothingId, color }, i) => (
                 <Chip
                   key={i}
-                  label={(
+                  label={
                     <Stack direction="row" alignItems="center" gap={1}>
-                      {(
-                        sections.find(({ id }) => sectionId === id)?.items || []
-                      ).find(({ id }) => id === clothingId)?.title || ''}
-                      <Box
-                        bgcolor={color}
-                        width={16}
-                        border={`1px solid ${grey['400']}`}
-                        borderRadius={1}
-                        sx={{ aspectRatio: 1 }}
-                      />
+                      {(sections.find(({ id }) => sectionId === id)?.items || []).find(({ id }) => id === clothingId)?.title || ''}
+                      <Box bgcolor={color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
                     </Stack>
-                  )}
+                  }
                   onDelete={() => {
                     const filteredData = savedData.filter((item) => {
-                      return (
-                        sectionId !== item.sectionId
-                        || clothingId !== item.clothingId
-                      );
+                      return sectionId !== item.sectionId || clothingId !== item.clothingId;
                     });
-                    localStorage.setItem(
-                      STORAGE_KEY,
-                      JSON.stringify(filteredData),
-                    );
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredData));
                     setSavedData(filteredData);
                     toast.success('의류가 삭제되었습니다.');
                   }}

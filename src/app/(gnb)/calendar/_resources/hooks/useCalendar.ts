@@ -3,10 +3,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 
 export default function useCalendar() {
-  const [
-    date,
-    setDate,
-  ] = useState<Dayjs>(dayjs().startOf('month'));
+  const [date, setDate] = useState<Dayjs>(dayjs().startOf('month'));
 
   const calendar = [
     ...Array(date.startOf('month').day())
