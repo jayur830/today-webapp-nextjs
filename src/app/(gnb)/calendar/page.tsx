@@ -6,7 +6,7 @@ import Cached from '@mui/icons-material/Cached';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
-import grey from '@mui/material/colors/grey';
+import { grey } from '@mui/material/colors';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker/MobileDatePicker';
@@ -26,7 +26,7 @@ import { getOOTD, groupBySectionId, mergeOOTD } from './_resources/utils';
 export default function Page() {
   const [startDate, setStartDate] = useState<Dayjs>(dayjs());
   const [endDate, setEndDate] = useState<Dayjs>(dayjs());
-  const [ootdList, setOotdList] = useState<OotdType[]>(JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]'));
+  const [ootdList, setOotdList] = useState<OotdType[]>(() => JSON.parse(isServer ? '[]' : localStorage.getItem(STORAGE_KEY_OOTD) || '[]'));
 
   const { date, calendar, onChange, onPrev, onNext } = useCalendar();
 

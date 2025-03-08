@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
-import grey from '@mui/material/colors/grey';
-import Grid from '@mui/material/Grid2';
+import { grey } from '@mui/material/colors';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -33,7 +33,7 @@ export interface CalendarProps {
 
 export default function Calendar({ calendarList, today, renderCell }: CalendarProps) {
   return (
-    <Grid display="grid" gridTemplateColumns="repeat(7, 1fr)" width="100%" maxWidth={1024} borderTop={`1px solid ${grey['400']}`} borderLeft={`1px solid ${grey['400']}`}>
+    <Grid display="grid" gridTemplateColumns="repeat(7, 1fr)" width="100%" maxWidth={1024} borderTop={`1px solid ${grey['400']}`} borderLeft={`1px solid ${grey['400']}`} borderRadius={3}>
       {calendarList.map((d, i) => {
         if (d.isSame(today, 'month')) {
           return (

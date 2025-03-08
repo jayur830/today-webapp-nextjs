@@ -3,9 +3,9 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
-import grey from '@mui/material/colors/grey';
+import { grey } from '@mui/material/colors';
 import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';

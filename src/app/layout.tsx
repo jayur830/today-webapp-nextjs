@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { ThemeProvider } from '@mui/material/styles';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';

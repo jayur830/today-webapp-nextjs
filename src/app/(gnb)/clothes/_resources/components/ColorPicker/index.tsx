@@ -2,8 +2,8 @@
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import grey from '@mui/material/colors/grey';
-import Grid from '@mui/material/Grid2';
+import { grey } from '@mui/material/colors';
+import Grid from '@mui/material/Grid';
 import Popover from '@mui/material/Popover';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';

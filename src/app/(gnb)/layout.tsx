@@ -1,4 +1,4 @@
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import type { PropsWithChildren } from 'react';
 
 import BottomNavigationBar from '@/components/BottomNavigationBar';
