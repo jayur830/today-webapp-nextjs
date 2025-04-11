@@ -45,6 +45,15 @@ export default function Page() {
     {} as Record<string, TodayClothingData[]>,
   );
 
+  const onGenerateOOTD = () => {
+    const oldList: OotdType[] = JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]');
+    const newList = getOOTD(data, startDate, endDate);
+    const mergedList = mergeOOTD(oldList, newList);
+
+    localStorage.setItem(STORAGE_KEY_OOTD, JSON.stringify(mergedList));
+    setOotdList(mergedList);
+  };
+
   return (
     <Stack alignItems="center" gap={2} width="100%" padding={2}>
       <Stack direction="row" justifyContent={{ xs: 'center', md: 'flex-start' }} alignItems="center" gap={1} width="100%">
@@ -103,6 +112,9 @@ export default function Page() {
             display: { xs: 'none', md: 'block' },
           }}
         />
+        <Button variant="contained" endIcon={<Cached />} onClick={onGenerateOOTD}>
+          OOTD 생성
+        </Button>
       </Stack>
       <Calendar
         calendarList={calendar}
@@ -197,20 +209,7 @@ export default function Page() {
             }}
           />
         </Box>
-        <Button
-          fullWidth
-          variant="contained"
-          endIcon={<Cached />}
-          onClick={() => {
-            const oldList: OotdType[] = JSON.parse(localStorage.getItem(STORAGE_KEY_OOTD) || '[]');
-            const newList = getOOTD(data, startDate, endDate);
-            const mergedList = mergeOOTD(oldList, newList);
-            console.log(mergedList);
-
-            localStorage.setItem(STORAGE_KEY_OOTD, JSON.stringify(mergedList));
-            setOotdList(mergedList);
-          }}
-        >
+        <Button fullWidth variant="contained" endIcon={<Cached />} onClick={onGenerateOOTD}>
           OOTD 생성
         </Button>
       </Stack>
