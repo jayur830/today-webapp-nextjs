@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 오늘 뭐 입지?
 
-## Getting Started
+내 옷을 등록하고 날짜별로 옷을 조합한 착장을 제시해주는 서비스입니다.
 
-First, run the development server:
+## 서비스 소개
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+"오늘 뭐 입지?"는 사용자가 보유한 옷들을 등록하고, 원하는 기간에 대해 날짜별로 옷을 조합한 착장을 제시해주는 서비스입니다.
+
+### 현재 구현된 기능
+
+- 옷 등록 및 관리
+  - localStorage를 사용한 개인 데이터 저장
+  - 옷 카테고리별 등록 및 관리
+  - 미리 정의된 색상 목록에서 선택
+- 날짜별 랜덤 착장 추천
+  - 원하는 기간 설정
+  - 날짜별 랜덤 조합 생성
+
+### 향후 계획
+
+#### 기능 개선
+- 날씨 기반 착장 추천
+- 특별 일정(미팅, 데이트 등) 기반 착장 추천
+- 사용자 선호도 기반 맞춤 추천
+- 색상 선택 기능 개선
+  - color picker 구현
+  - 사용자 정의 색상 저장
+
+#### 백엔드 구축
+- 사용자 인증 기능 추가
+- 데이터베이스 연동
+  - 개인별 옷 데이터 저장
+  - 착장 히스토리 관리
+  - 사용자 설정 저장
+
+## 기술 스택
+
+- **프레임워크**: Next.js 15.2.3
+- **언어**: TypeScript
+- **UI 라이브러리**: 
+  - Material-UI (@mui/material)
+  - Emotion (@emotion/react, @emotion/styled)
+- **상태 관리**: React Context API
+- **날짜 처리**: dayjs
+- **빌드 도구**: Yarn
+
+## 프로젝트 구조
+
+```
+src/
+├── app/          # Next.js 13+ App Router
+├── components/   # 재사용 가능한 컴포넌트
+├── contexts/     # React Context 관련 파일
+├── styles/       # 전역 스타일 및 테마
+├── types/        # TypeScript 타입 정의
+├── constants/    # 상수 정의
+├── assets/       # 정적 에셋
+└── middleware.ts # Next.js 미들웨어
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 시작하기
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 필수 조건
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js
+- Yarn
 
-## Learn More
+### 설치
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+yarn install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 개발 서버 실행
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+yarn dev
+```
 
-## Deploy on Vercel
+### 프로덕션 빌드
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+yarn build
+yarn start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Docker 지원
+
+프로젝트는 Docker를 통한 배포를 지원합니다.
+
+### Docker 빌드
+
+```bash
+docker build -t today-webapp .
+```
+
+### Docker 실행
+
+```bash
+docker run -p 3000:3000 today-webapp
+```
+
+## 코드 스타일
+
+- ESLint와 Prettier를 사용하여 코드 스타일을 유지합니다.
+- TypeScript를 사용하여 타입 안정성을 보장합니다.
