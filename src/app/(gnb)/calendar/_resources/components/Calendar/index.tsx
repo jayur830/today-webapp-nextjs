@@ -1,3 +1,5 @@
+'use client';
+
 import Box from '@mui/material/Box';
 import { grey } from '@mui/material/colors';
 import Grid from '@mui/material/Grid';
@@ -9,12 +11,11 @@ import type { PropsWithChildren, ReactNode } from 'react';
 function DateCell({ children }: PropsWithChildren) {
   return (
     <Box
+      className="date-cell"
       display="flex"
       flexDirection="column"
       gap={1}
       minHeight={100}
-      borderRight={`1px solid ${grey['400']}`}
-      borderBottom={`1px solid ${grey['400']}`}
       padding={{
         xs: '15%',
         md: 2,
@@ -33,7 +34,28 @@ export interface CalendarProps {
 
 export default function Calendar({ calendarList, today, renderCell }: CalendarProps) {
   return (
-    <Grid display="grid" gridTemplateColumns="repeat(7, 1fr)" width="100%" maxWidth={1024} borderTop={`1px solid ${grey['400']}`} borderLeft={`1px solid ${grey['400']}`} borderRadius={3}>
+    <Grid
+      display="grid"
+      gridTemplateColumns="repeat(7, 1fr)"
+      width="100%"
+      maxWidth={1024}
+      borderTop={`1px solid ${grey['400']}`}
+      borderRight={`1px solid ${grey['400']}`}
+      borderLeft={`1px solid ${grey['400']}`}
+      borderRadius={3}
+      sx={{
+        '.date-cell': {
+          borderRight: `1px solid ${grey['400']}`,
+          borderBottom: `1px solid ${grey['400']}`,
+          '&:nth-of-type(7n)': {
+            borderRight: 'none',
+          },
+          '&:nth-of-type(n / 7)': {
+            borderRight: 'none',
+          },
+        },
+      }}
+    >
       {calendarList.map((d, i) => {
         if (d.isSame(today, 'month')) {
           return (
