@@ -1,0 +1,8 @@
+.next/
+.husky/
+.vscode/
+node_modules/
+dist/
+.gitignore
+*.md
+*.log
