@@ -75,11 +75,20 @@ export default function Page() {
               hidden: true,
             },
             actionBar: {
-              hidden: true,
+              sx: {
+                display: 'none',
+              },
             },
             textField: {
               label: '시작일',
               size: 'small',
+            },
+            dialog: {
+              slotProps: {
+                paper: {
+                  sx: { animation: 'fadeIn 0.3s ease-in-out' },
+                },
+              },
             },
           }}
           sx={{
@@ -101,18 +110,25 @@ export default function Page() {
               hidden: true,
             },
             actionBar: {
-              hidden: true,
+              sx: {
+                display: 'none',
+              },
             },
             textField: {
               label: '종료일',
               size: 'small',
+            },
+            dialog: {
+              slotProps: {
+                paper: { sx: { animation: 'fadeIn 0.3s ease-in-out' } },
+              },
             },
           }}
           sx={{
             display: { xs: 'none', md: 'block' },
           }}
         />
-        <Button variant="contained" endIcon={<Cached />} onClick={onGenerateOOTD}>
+        <Button variant="contained" endIcon={<Cached />} onClick={onGenerateOOTD} sx={{ display: { xs: 'none', md: 'flex' } }}>
           OOTD 생성
         </Button>
       </Stack>
@@ -166,13 +182,20 @@ export default function Page() {
                 hidden: true,
               },
               actionBar: {
-                hidden: true,
+                sx: {
+                  display: 'none',
+                },
               },
               textField: {
                 fullWidth: true,
                 size: 'small',
                 sx: {
                   flex: 1,
+                },
+              },
+              dialog: {
+                slotProps: {
+                  paper: { sx: { animation: 'fadeIn 0.3s ease-in-out' } },
                 },
               },
             }}
@@ -197,13 +220,20 @@ export default function Page() {
                 hidden: true,
               },
               actionBar: {
-                hidden: true,
+                sx: {
+                  display: 'none',
+                },
               },
               textField: {
                 fullWidth: true,
                 size: 'small',
                 sx: {
                   flex: 1,
+                },
+              },
+              dialog: {
+                slotProps: {
+                  paper: { sx: { animation: 'fadeIn 0.3s ease-in-out' } },
                 },
               },
             }}

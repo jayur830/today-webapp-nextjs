@@ -20,7 +20,7 @@ export default async function Layout({ children }: PropsWithChildren) {
           xs: 0,
           md: 30,
         }}
-        paddingBottom="60px"
+        paddingBottom="calc(100px + env(safe-area-inset-bottom))"
       >
         {children}
       </Grid>

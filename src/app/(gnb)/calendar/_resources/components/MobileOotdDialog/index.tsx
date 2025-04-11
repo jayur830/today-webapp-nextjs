@@ -38,6 +38,7 @@ export default function MobileOotdDialog({ ootdList }: MobileOotdDialogProps) {
           paper: {
             sx: {
               padding: 2,
+              animation: open ? 'fadeIn 0.3s ease-in-out' : 'fadeOut 0.3s ease-in-out',
             },
           },
         }}

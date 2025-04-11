@@ -43,6 +43,15 @@ export default function DatePicker({ date, onChange, onPrev, onNext }: DatePicke
           toolbar: {
             hidden: true,
           },
+          dialog: {
+            slotProps: {
+              paper: {
+                sx: {
+                  animation: 'fadeIn 0.3s ease-in-out',
+                },
+              },
+            },
+          },
           textField: {
             label: null,
             variant: 'standard',

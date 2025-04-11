@@ -182,6 +182,14 @@ export const theme = createTheme({
         },
       },
     },
+    MuiBottomNavigation: {
+      styleOverrides: {
+        root: {
+          height: 'calc(67px + env(safe-area-inset-bottom))',
+          paddingBottom: 'calc(env(safe-area-inset-bottom))',
+        },
+      },
+    },
     MuiBottomNavigationAction: {
       styleOverrides: {
         root: {
@@ -215,6 +223,41 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           background: 'linear-gradient(45deg, #FF5722 30%, #FF7043 90%)',
+        },
+      },
+    },
+    MuiDialog: {
+      defaultProps: {
+        slotProps: {
+          paper({ open }) {
+            return {
+              animation: open ? 'fadeIn 0.3s ease-in-out' : 'fadeOut 0.3s ease-in-out',
+            };
+          },
+        },
+      },
+      styleOverrides: {
+        paper: {
+          '@keyframes fadeIn': {
+            from: {
+              transform: 'scale(0.9)',
+              opacity: 0,
+            },
+            to: {
+              transform: 'scale(1)',
+              opacity: 1,
+            },
+          },
+          '@keyframes fadeOut': {
+            from: {
+              transform: 'scale(1)',
+              opacity: 1,
+            },
+            to: {
+              transform: 'scale(0.7)',
+              opacity: 0,
+            },
+          },
         },
       },
     },
