@@ -2,13 +2,21 @@ import '@/styles/globals.css';
 
 import { ThemeProvider } from '@mui/material/styles';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import type { PropsWithChildren } from 'react';
 
 import { fonts } from '@/assets/fonts';
 import ToastContainer from '@/components/ToastContainer';
 import DatePickerProvider from '@/contexts/DatePickerProvider';
 import { theme } from '@/styles/theme';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
+  userScalable: false,
+};
 
 export const metadata: Metadata = {
   title: '오늘 뭐 입지?',
