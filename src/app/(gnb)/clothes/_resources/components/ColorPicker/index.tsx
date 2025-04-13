@@ -29,9 +29,10 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
           setAnchorEl(e.currentTarget);
         }}
         sx={{
+          background: 'transparent',
           padding: 0,
           ':hover': {
-            bgcolor: 'transparent',
+            background: 'transparent',
           },
         }}
       >
