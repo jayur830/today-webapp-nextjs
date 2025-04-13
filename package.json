@@ -45,6 +45,11 @@
     "typescript": "^5",
     "typescript-eslint": "^8.24.1"
   },
+  "description": "\"오늘 뭐 입지?\"는 사용자가 보유한 옷들을 등록하고, 원하는 기간에 대해 날짜별로 옷을 조합한 착장을 제시해주는 서비스입니다.",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
