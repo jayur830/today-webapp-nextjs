@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    short_name: 'today',
+    short_name: '오늘 뭐 입지?',
     name: '오늘 뭐 입지?',
     icons: [
       {
