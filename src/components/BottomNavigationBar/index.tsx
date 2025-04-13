@@ -44,8 +44,8 @@ export default function BottomNavigationBar() {
         },
       }}
     >
-      {navigations.map((props, i) => (
-        <BottomNavigationAction key={i} {...props} />
+      {navigations.map((props) => (
+        <BottomNavigationAction key={props.href} {...props} />
       ))}
     </BottomNavigation>
   );

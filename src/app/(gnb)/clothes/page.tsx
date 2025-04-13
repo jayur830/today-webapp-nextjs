@@ -39,15 +39,15 @@ export default function Page() {
 
   return (
     <Stack divider={<Divider />} gap={5} width="100%" padding={2}>
-      {sections.map(({ id: sectionId, title, items }, i) => (
-        <Grid key={i}>
+      {sections.map(({ id: sectionId, title, items }) => (
+        <Grid key={sectionId}>
           <Typography variant="h3" fontWeight={700}>
             {title}
           </Typography>
           <Stack direction="row" flexWrap="wrap" gap={2} marginTop={2} marginBottom={3}>
             {items.map(({ id, title }, j) => (
               <Chip
-                key={j}
+                key={`${sectionId}-${id}`}
                 label={title}
                 color={data[sectionId as keyof typeof data].selected === id ? 'primary' : 'default'}
                 onClick={() => {
@@ -116,7 +116,7 @@ export default function Page() {
               .filter(({ sectionId: targetSectionId }) => sectionId === targetSectionId)
               .map(({ sectionId, clothingId, color }, i) => (
                 <Chip
-                  key={i}
+                  key={`${sectionId}-${clothingId}`}
                   label={
                     <Stack direction="row" alignItems="center" gap={1}>
                       {(sections.find(({ id }) => sectionId === id)?.items || []).find(({ id }) => id === clothingId)?.title || ''}

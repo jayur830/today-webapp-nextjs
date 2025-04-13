@@ -59,7 +59,7 @@ export default function Calendar({ calendarList, today, renderCell }: CalendarPr
       {calendarList.map((d, i) => {
         if (d.isSame(today, 'month')) {
           return (
-            <DateCell key={i}>
+            <DateCell key={d.format('YYYY-MM-DD')}>
               {dayjs().isSame(d, 'day') ? (
                 <Box
                   position="relative"
@@ -85,7 +85,7 @@ export default function Calendar({ calendarList, today, renderCell }: CalendarPr
         }
 
         return (
-          <DateCell key={i}>
+          <DateCell key={d.format('YYYY-MM-DD')}>
             {dayjs().isSame(d, 'day') ? (
               <Box
                 position="relative"

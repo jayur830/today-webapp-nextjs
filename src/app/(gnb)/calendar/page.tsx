@@ -142,9 +142,9 @@ export default function Page() {
             }
             return (
               <Stack direction="row" flexWrap="wrap" gap={1}>
-                {ootdMap[date.format('YYYY-MM-DD')].map((clothing, j) => (
+                {ootdMap[date.format('YYYY-MM-DD')].map((clothing) => (
                   <Chip
-                    key={j}
+                    key={`${clothing.sectionId}-${clothing.clothingId}`}
                     label={
                       <Stack direction="row" alignItems="center" gap={1}>
                         {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}

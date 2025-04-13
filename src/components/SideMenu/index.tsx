@@ -45,8 +45,8 @@ export default function SideMenu() {
       }}
     >
       <List>
-        {navigations.map(({ href, icon, label }, i) => (
-          <ListItem key={i}>
+        {navigations.map(({ href, icon, label }) => (
+          <ListItem key={href}>
             <ListItemButton
               href={href}
               sx={{

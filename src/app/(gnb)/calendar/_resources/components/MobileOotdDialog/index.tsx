@@ -47,9 +47,9 @@ export default function MobileOotdDialog({ ootdList }: MobileOotdDialogProps) {
           오늘의 착장
         </Typography>
         <Stack direction="row" flexWrap="wrap" gap={1} marginTop={2}>
-          {ootdList.map((clothing, j) => (
+          {ootdList.map((clothing) => (
             <Chip
-              key={j}
+              key={`${clothing.sectionId}-${clothing.clothingId}`}
               label={
                 <Stack direction="row" alignItems="center" gap={1}>
                   {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}
