@@ -1,4 +1,5 @@
 {
+  "tagFormat": "release-${version}",
   "plugins": [
     [
       "@semantic-release/git",
