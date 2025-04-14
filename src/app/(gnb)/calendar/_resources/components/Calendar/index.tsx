@@ -39,14 +39,15 @@ export default function Calendar({ calendarList, today, renderCell }: CalendarPr
       gridTemplateColumns="repeat(7, 1fr)"
       width="100%"
       maxWidth={1024}
-      borderTop={`1px solid ${grey['400']}`}
-      borderRight={`1px solid ${grey['400']}`}
-      borderLeft={`1px solid ${grey['400']}`}
+      border={`1px solid ${grey['400']}`}
       borderRadius={3}
       sx={{
         '.date-cell': {
           borderRight: `1px solid ${grey['400']}`,
-          borderBottom: `1px solid ${grey['400']}`,
+          borderTop: `1px solid ${grey['400']}`,
+          '&:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3), &:nth-of-type(4), &:nth-of-type(5), &:nth-of-type(6), &:nth-of-type(7)': {
+            borderTop: 'none',
+          },
           '&:nth-of-type(7n)': {
             borderRight: 'none',
           },
