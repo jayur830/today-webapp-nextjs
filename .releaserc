@@ -4,6 +4,7 @@
   ],
   "tagFormat": "release-${version}",
   "plugins": [
+    "@semantic-release/changelog",
     "@semantic-release/npm",
     [
       "@semantic-release/git",
@@ -62,12 +63,6 @@
             "release": "patch"
           }
         ]
-      }
-    ],
-    [
-      "@semantic-release/changelog",
-      {
-        "changelogFile": "CHANGELOG.md"
       }
     ]
   ]
