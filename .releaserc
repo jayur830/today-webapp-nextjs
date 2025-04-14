@@ -4,15 +4,6 @@
   ],
   "tagFormat": "release-${version}",
   "plugins": [
-    "@semantic-release/changelog",
-    "@semantic-release/npm",
-    [
-      "@semantic-release/git",
-      {
-        "assets": "package.json",
-        "message": "ci: ${nextRelease.version}"
-      }
-    ],
     [
       "@semantic-release/commit-analyzer",
       {
@@ -63,6 +54,16 @@
             "release": "patch"
           }
         ]
+      }
+    ],
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    [
+      "@semantic-release/git",
+      {
+        "assets": "package.json",
+        "message": "ci: ${nextRelease.version}"
       }
     ]
   ]
