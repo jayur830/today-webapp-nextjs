@@ -40,100 +40,106 @@ export default function Page() {
   return (
     <Stack divider={<Divider />} gap={5} width="100%" padding={2}>
       {sections.map(({ id: sectionId, title, items }) => (
-        <Grid key={sectionId}>
-          <Typography variant="h3" fontWeight={700}>
-            {title}
-          </Typography>
-          <Stack direction="row" flexWrap="wrap" gap={2} marginTop={2} marginBottom={3}>
-            {items.map(({ id, title }, j) => (
-              <Chip
-                key={`${sectionId}-${id}`}
-                label={title}
-                color={data[sectionId as keyof typeof data].selected === id ? 'primary' : 'default'}
-                onClick={() => {
-                  setData((state) => ({
-                    ...state,
-                    [sectionId]: {
-                      ...state[sectionId as keyof typeof state],
-                      selected: id,
-                    },
-                  }));
-                }}
-              />
-            ))}
-          </Stack>
-          <ColorPicker
-            value={data[sectionId].color || '#FFFFFF'}
-            onChange={(color) => {
-              setData((state) => ({
-                ...state,
-                [sectionId]: {
-                  ...state[sectionId as keyof typeof state],
-                  color,
-                },
-              }));
-            }}
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={() => {
-              const storage = localStorage.getItem(STORAGE_KEY);
-              const addedData = [
-                ...(storage ? JSON.parse(storage) : []),
-                {
-                  sectionId,
-                  clothingId: data[sectionId].selected,
-                  color: data[sectionId].color,
-                },
-              ];
-              setSavedData(addedData);
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(addedData));
-              toast.info('의류가 추가되었습니다.');
-            }}
-            sx={{
-              marginTop: 2,
-            }}
-          >
-            추가
-          </Button>
-          <Typography variant="h4" fontWeight={700} marginY={2}>
-            목록
-          </Typography>
-          <Stack
-            direction="row"
-            flexWrap="wrap"
-            gap={2}
-            borderColor={grey[400]}
-            borderRadius={2}
-            padding={2}
-            sx={{
-              borderWidth: 1,
-              borderStyle: 'solid',
-            }}
-          >
-            {savedData
-              .filter(({ sectionId: targetSectionId }) => sectionId === targetSectionId)
-              .map(({ sectionId, clothingId, color }, i) => (
+        <Grid key={sectionId} container direction={{ xs: 'column', md: 'row' }} gap={{ xs: 1, md: 2 }} width="100%">
+          <Box flex={1}>
+            <Typography variant="h3" fontWeight={700}>
+              {title}
+            </Typography>
+            <Stack direction="row" flexWrap="wrap" gap={2} marginTop={2} marginBottom={3}>
+              {items.map(({ id, title }, j) => (
                 <Chip
-                  key={`${sectionId}-${clothingId}`}
-                  label={
-                    <Stack direction="row" alignItems="center" gap={1}>
-                      {(sections.find(({ id }) => sectionId === id)?.items || []).find(({ id }) => id === clothingId)?.title || ''}
-                      <Box bgcolor={color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
-                    </Stack>
-                  }
-                  onDelete={() => {
-                    const filteredData = savedData.filter((item) => {
-                      return sectionId !== item.sectionId || clothingId !== item.clothingId;
-                    });
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredData));
-                    setSavedData(filteredData);
-                    toast.success('의류가 삭제되었습니다.');
+                  key={`${sectionId}-${id}`}
+                  label={title}
+                  color={data[sectionId as keyof typeof data].selected === id ? 'primary' : 'default'}
+                  onClick={() => {
+                    setData((state) => ({
+                      ...state,
+                      [sectionId]: {
+                        ...state[sectionId as keyof typeof state],
+                        selected: id,
+                      },
+                    }));
                   }}
                 />
               ))}
-          </Stack>
+            </Stack>
+            <ColorPicker
+              value={data[sectionId].color || '#FFFFFF'}
+              onChange={(color) => {
+                setData((state) => ({
+                  ...state,
+                  [sectionId]: {
+                    ...state[sectionId as keyof typeof state],
+                    color,
+                  },
+                }));
+              }}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => {
+                const storage = localStorage.getItem(STORAGE_KEY);
+                const addedData = [
+                  ...(storage ? JSON.parse(storage) : []),
+                  {
+                    sectionId,
+                    clothingId: data[sectionId].selected,
+                    color: data[sectionId].color,
+                  },
+                ];
+                setSavedData(addedData);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(addedData));
+                toast.info('의류가 추가되었습니다.');
+              }}
+              sx={{
+                marginTop: 2,
+              }}
+            >
+              추가
+            </Button>
+          </Box>
+          <Box display="flex" flexDirection="column" flex={1}>
+            <Typography variant="h4" fontWeight={700} marginTop={{ xs: 2, md: 0 }} marginBottom={2}>
+              목록
+            </Typography>
+            <Stack
+              direction="row"
+              flexWrap="wrap"
+              flex={1}
+              gap={2}
+              minHeight={100}
+              borderColor={grey[400]}
+              borderRadius={2}
+              padding={2}
+              sx={{
+                borderWidth: 1,
+                borderStyle: 'solid',
+              }}
+            >
+              {savedData
+                .filter(({ sectionId: targetSectionId }) => sectionId === targetSectionId)
+                .map(({ sectionId, clothingId, color }, i) => (
+                  <Chip
+                    key={`${sectionId}-${clothingId}`}
+                    label={
+                      <Stack direction="row" alignItems="center" gap={1}>
+                        {(sections.find(({ id }) => sectionId === id)?.items || []).find(({ id }) => id === clothingId)?.title || ''}
+                        <Box bgcolor={color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
+                      </Stack>
+                    }
+                    onDelete={() => {
+                      const filteredData = savedData.filter((item) => {
+                        return sectionId !== item.sectionId || clothingId !== item.clothingId;
+                      });
+                      localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredData));
+                      setSavedData(filteredData);
+                      toast.success('의류가 삭제되었습니다.');
+                    }}
+                  />
+                ))}
+            </Stack>
+          </Box>
         </Grid>
       ))}
     </Stack>
