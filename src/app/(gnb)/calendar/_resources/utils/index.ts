@@ -29,19 +29,70 @@ export function groupBySectionId(data: TodayClothingData[]) {
   );
 }
 
+// /**
+//  * startDate ~ endDate 날짜 범위의 OOTD 생성
+//  *
+//  * 일단은 랜덤으로 생성
+//  * @todo 이걸 바꿔야 함
+//  * - 같은 카테고리의 의류 N개는 한번씩 모두 착장에 포함되어야 한다.
+//  * - 같은 카테고리의 의류 N개가 모두 착장에 사용되는 도중 이미 사용되었던 의류가 N개를 모두 사용하기 전에 다시 사용되면 안된다.
+//  *   - [검은색 스니커즈, 흰색 스니커즈, 흰색 운동화, 검은색 운동화, 검은색 구두] 이렇게 있으면 흰색 운동화를 먼저 조합에 포함하고 5개를 모두 사용하기 전에 흰색 운동화를 다시 사용하는 경우가 없어야 함.
+//  */
+// export function getOOTD(data: { [sectionId: string]: TodayClothingData[] }, startDate: Dayjs, endDate: Dayjs, unit: ManipulateType = 'day'): OotdType[] {
+//   const list = [];
+//   for (let d = startDate; d.isBefore(endDate) || d.isSame(endDate); d = d.add(1, unit)) {
+//     list.push({
+//       date: d.format('YYYY-MM-DD'),
+//       clothingList: Object.entries(data).map(([, clothingList]) => clothingList[Math.round(Math.random() * 100) % clothingList.length]),
+//     });
+//   }
+//   return list;
+// }
+/**
+ * Fisher–Yates 알고리즘으로 배열을 in-place로 섞어서 반환합니다.
+ */
+function shuffle<T>(arr: T[]): T[] {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 /**
  * startDate ~ endDate 날짜 범위의 OOTD 생성
  *
- * 일단은 랜덤으로 생성
+ * - 같은 카테고리(섹션)의 의류 N개는 한번씩 모두 착장에 포함된다.
+ * - N개를 모두 사용하기 전에는 절대 같은 의류가 다시 사용되지 않는다.
  */
 export function getOOTD(data: { [sectionId: string]: TodayClothingData[] }, startDate: Dayjs, endDate: Dayjs, unit: ManipulateType = 'day'): OotdType[] {
-  const list = [];
-  for (let d = startDate; d.isBefore(endDate) || d.isSame(endDate); d = d.add(1, unit)) {
+  // 섹션별로 “남은 아이템” 큐를 초기화 (랜덤 순서)
+  const remaining: Record<string, TodayClothingData[]> = {};
+  for (const sectionId of Object.keys(data)) {
+    remaining[sectionId] = shuffle(data[sectionId]);
+  }
+
+  const list: OotdType[] = [];
+  for (let d = startDate.clone(); d.isBefore(endDate) || d.isSame(endDate); d = d.add(1, unit)) {
+    const clothingList: TodayClothingData[] = [];
+
+    for (const [sectionId, items] of Object.entries(data)) {
+      // 큐가 비어 있으면 다시 새 사이클 — 원본 배열을 shuffle
+      if (remaining[sectionId].length === 0) {
+        remaining[sectionId] = shuffle(items);
+      }
+      // 맨 앞 요소를 꺼내서 사용
+      const nextItem = remaining[sectionId].shift()!;
+      clothingList.push(nextItem);
+    }
+
     list.push({
       date: d.format('YYYY-MM-DD'),
-      clothingList: Object.entries(data).map(([, clothingList]) => clothingList[Math.round(Math.random() * 100) % clothingList.length]),
+      clothingList,
     });
   }
+
   return list;
 }
 
