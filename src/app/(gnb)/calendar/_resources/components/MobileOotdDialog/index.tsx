@@ -53,7 +53,7 @@ export default function MobileOotdDialog({ ootdList }: MobileOotdDialogProps) {
               label={
                 <Stack direction="row" alignItems="center" gap={1}>
                   {(sections.find(({ id }) => clothing.sectionId === id)?.items || []).find(({ id }) => id === clothing.clothingId)?.title || ''}
-                  <Box bgcolor={clothing.color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
+                  <Box bgcolor={clothing.color} data-testid="clothing-color" width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
                 </Stack>
               }
             />
