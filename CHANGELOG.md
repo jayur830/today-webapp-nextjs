@@ -1,3 +1,5 @@
+## [1.0.7](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.0.6...release-1.0.7) (2025-04-17)
+
 ## [1.0.6](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.0.5...release-1.0.6) (2025-04-17)
 
 
