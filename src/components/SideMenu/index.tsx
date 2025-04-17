@@ -32,9 +32,11 @@ export default function SideMenu() {
     <Drawer
       variant="permanent"
       anchor="left"
-      PaperProps={{
-        sx: {
-          width: 240,
+      slotProps={{
+        paper: {
+          sx: {
+            width: 240,
+          },
         },
       }}
       sx={{
