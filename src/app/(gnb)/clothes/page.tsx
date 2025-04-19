@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { toast } from '@/components/ToastContainer/toast';
 import { STORAGE_KEY } from '@/constants';
@@ -35,7 +35,14 @@ export default function Page() {
       },
     ),
   );
-  const [savedData, setSavedData] = useState<TodayClothingData[]>(JSON.parse(typeof window === 'undefined' ? '[]' : localStorage.getItem(STORAGE_KEY) || '[]'));
+  const [savedData, setSavedData] = useState<TodayClothingData[]>([]);
+
+  useLayoutEffect(() => {
+    const storage = localStorage.getItem(STORAGE_KEY);
+    if (storage) {
+      setSavedData(JSON.parse(storage));
+    }
+  }, []);
 
   return (
     <Stack divider={<Divider />} gap={5} width="100%" padding={2}>
@@ -119,9 +126,9 @@ export default function Page() {
             >
               {savedData
                 .filter(({ sectionId: targetSectionId }) => sectionId === targetSectionId)
-                .map(({ sectionId, clothingId, color }, i) => (
+                .map(({ sectionId, clothingId, color }) => (
                   <Chip
-                    key={`${sectionId}-${clothingId}`}
+                    key={`${sectionId}-${clothingId}-${color}`}
                     label={
                       <Stack direction="row" alignItems="center" gap={1}>
                         {(sections.find(({ id }) => sectionId === id)?.items || []).find(({ id }) => id === clothingId)?.title || ''}
