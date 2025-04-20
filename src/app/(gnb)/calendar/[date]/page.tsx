@@ -60,7 +60,7 @@ export default function Page() {
   };
 
   return (
-    <Grid container width="100%" height="100%">
+    <Grid container direction={{ xs: 'column', md: 'row' }} width="100%" height="100%">
       <Grid flex={1} padding={2}>
         <Typography variant="h2" marginBottom={2}>
           의류 목록
