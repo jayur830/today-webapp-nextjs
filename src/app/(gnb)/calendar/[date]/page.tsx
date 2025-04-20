@@ -26,35 +26,35 @@ export default function Page() {
   const ootd = ootdList.find(({ date: d }) => d === date);
 
   const onAddOotdItem = (sectionId: string, clothingId: string, color: string) => {
-    setOotdList((state) =>
-      state.map((item) => {
-        if (item.date === date) {
-          return {
-            ...item,
-            clothingList: item.clothingList.some((clothing) => clothing.sectionId === sectionId && clothing.clothingId === clothingId && clothing.color === color)
-              ? item.clothingList
-              : [...item.clothingList, { sectionId, clothingId, color }],
-          };
-        }
+    const newOotdList = ootdList.map((item) => {
+      if (item.date === date) {
+        return {
+          ...item,
+          clothingList: item.clothingList.some((clothing) => clothing.sectionId === sectionId && clothing.clothingId === clothingId && clothing.color === color)
+            ? item.clothingList
+            : [...item.clothingList, { sectionId, clothingId, color }],
+        };
+      }
 
-        return item;
-      }),
-    );
+      return item;
+    });
+    setOotdList(newOotdList);
+    localStorage.setItem(STORAGE_KEY_OOTD, JSON.stringify(newOotdList));
   };
 
   const onDeleteOotdItem = (clothingId: string) => {
-    setOotdList((state) =>
-      state.map((item) => {
-        if (item.date === date) {
-          return {
-            ...item,
-            clothingList: item.clothingList.filter(({ clothingId: id }) => id !== clothingId),
-          };
-        }
+    const newOotdList = ootdList.map((item) => {
+      if (item.date === date) {
+        return {
+          ...item,
+          clothingList: item.clothingList.filter(({ clothingId: id }) => id !== clothingId),
+        };
+      }
 
-        return item;
-      }),
-    );
+      return item;
+    });
+    setOotdList(newOotdList);
+    localStorage.setItem(STORAGE_KEY_OOTD, JSON.stringify(newOotdList));
   };
 
   return (
