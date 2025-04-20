@@ -96,9 +96,9 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
           ))}
         </Stack>
         <Grid display="grid" gridTemplateColumns="repeat(14, 1fr)" gap={1} marginTop={1}>
-          {colors.map((color) => (
+          {colors.map((color, i) => (
             <Button
-              key={color}
+              key={`${color}-${i}`}
               onClick={() => {
                 onChange && onChange(color);
                 setAnchorEl(undefined);
