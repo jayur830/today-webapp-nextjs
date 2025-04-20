@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 
-import { colors } from '../../constants';
+import { colors } from '@/constants/clothing';
 
 export interface ColorPickerProps {
   value: string;

@@ -19,14 +19,14 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { STORAGE_KEY, STORAGE_KEY_OOTD } from '@/constants';
+import { sections } from '@/constants/clothing';
+import useLocalStorageState from '@/hooks/useLocalStorageState';
 import type { OotdType, TodayClothingData } from '@/types';
 
-import { sections } from '../clothes/_resources/constants';
 import Calendar from './_resources/components/Calendar';
 import DatePicker from './_resources/components/DatePicker';
 import MobileOotdDialog from './_resources/components/MobileOotdDialog';
 import useCalendar from './_resources/hooks/useCalendar';
-import useLocalStorageState from './_resources/hooks/useLocalStorageState';
 import { getOOTD, groupBySectionId, mergeOOTD } from './_resources/utils';
 
 const defaultSlotProps = {

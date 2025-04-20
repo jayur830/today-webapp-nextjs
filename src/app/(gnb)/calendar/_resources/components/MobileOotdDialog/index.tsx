@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
 
-import { sections } from '@/app/(gnb)/clothes/_resources/constants';
+import { sections } from '@/constants/clothing';
 import type { TodayClothingData } from '@/types';
 
 export interface MobileOotdDialogProps {

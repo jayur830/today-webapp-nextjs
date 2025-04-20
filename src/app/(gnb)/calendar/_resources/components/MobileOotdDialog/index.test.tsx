@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-import { sections } from '@/app/(gnb)/clothes/_resources/constants';
+import { sections } from '@/constants/clothing';
 import type { TodayClothingData } from '@/types';
 
 import MobileOotdDialog from '.';

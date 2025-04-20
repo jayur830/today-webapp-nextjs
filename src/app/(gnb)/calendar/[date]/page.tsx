@@ -13,10 +13,9 @@ import Typography from '@mui/material/Typography';
 import { useParams } from 'next/navigation';
 
 import { STORAGE_KEY, STORAGE_KEY_OOTD } from '@/constants';
+import { sections } from '@/constants/clothing';
+import useLocalStorageState from '@/hooks/useLocalStorageState';
 import type { OotdType, TodayClothingData } from '@/types';
-
-import { sections } from '../../clothes/_resources/constants';
-import useLocalStorageState from '../_resources/hooks/useLocalStorageState';
 
 export default function Page() {
   const { date } = useParams<{ date: string }>();

@@ -12,10 +12,10 @@ import { useLayoutEffect, useState } from 'react';
 
 import { toast } from '@/components/ToastContainer/toast';
 import { STORAGE_KEY } from '@/constants';
+import { sections } from '@/constants/clothing';
 import type { TodayClothingData } from '@/types';
 
 import ColorPicker from './_resources/components/ColorPicker';
-import { sections } from './_resources/constants';
 
 export default function Page() {
   const [data, setData] = useState(() =>
