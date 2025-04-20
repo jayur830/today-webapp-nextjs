@@ -32,7 +32,9 @@ export default function Page() {
           ...item,
           clothingList: item.clothingList.some((clothing) => clothing.sectionId === sectionId && clothing.clothingId === clothingId && clothing.color === color)
             ? item.clothingList
-            : [...item.clothingList, { sectionId, clothingId, color }],
+            : item.clothingList.some((clothing) => clothing.sectionId === sectionId)
+              ? item.clothingList.map((clothing) => (clothing.sectionId === sectionId ? { ...clothing, clothingId, color } : clothing))
+              : [...item.clothingList, { sectionId, clothingId, color }],
         };
       }
 
