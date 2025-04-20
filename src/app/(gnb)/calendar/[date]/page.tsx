@@ -25,9 +25,6 @@ export default function Page() {
   const [ootdList, setOotdList] = useLocalStorageState<OotdType[]>(STORAGE_KEY_OOTD, []);
   const ootd = ootdList.find(({ date: d }) => d === date);
 
-  console.log('storageData:', storageData);
-  console.log('clothingList:', ootd?.clothingList);
-
   const onAddOotdItem = (sectionId: string, clothingId: string, color: string) => {
     setOotdList((state) =>
       state.map((item) => {
