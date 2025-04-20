@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.1.1...release-1.1.2) (2025-04-20)
+
+
+### Bug Fixes
+
+* 모바일 캘린더에서 상세 페이지로 이동하는 버튼 누락됨 ([fba597d](https://github.com/jayur830/today-webapp-nextjs/commit/fba597d83b8306d3782620fbf20d4872b8b3441e))
+
 ## [1.1.1](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.1.0...release-1.1.1) (2025-04-20)
 
 # [1.1.0](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.0.9...release-1.1.0) (2025-04-20)
