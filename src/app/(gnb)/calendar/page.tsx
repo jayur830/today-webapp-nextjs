@@ -3,6 +3,7 @@
 import 'dayjs/locale/ko';
 
 import Cached from '@mui/icons-material/Cached';
+import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
@@ -14,6 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker/MobileDatePicker';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { STORAGE_KEY, STORAGE_KEY_OOTD } from '@/constants';
@@ -26,6 +28,24 @@ import MobileOotdDialog from './_resources/components/MobileOotdDialog';
 import useCalendar from './_resources/hooks/useCalendar';
 import useLocalStorageState from './_resources/hooks/useLocalStorageState';
 import { getOOTD, groupBySectionId, mergeOOTD } from './_resources/utils';
+
+const defaultSlotProps = {
+  toolbar: {
+    hidden: true,
+  },
+  actionBar: {
+    sx: {
+      display: 'none',
+    },
+  },
+  dialog: {
+    slotProps: {
+      paper: {
+        sx: { animation: 'fadeIn 0.3s ease-in-out' },
+      },
+    },
+  },
+};
 
 export default function Page() {
   const [startDate, setStartDate] = useState<Dayjs>(dayjs());
@@ -72,24 +92,10 @@ export default function Page() {
             }
           }}
           slotProps={{
-            toolbar: {
-              hidden: true,
-            },
-            actionBar: {
-              sx: {
-                display: 'none',
-              },
-            },
+            ...defaultSlotProps,
             textField: {
               label: '시작일',
               size: 'small',
-            },
-            dialog: {
-              slotProps: {
-                paper: {
-                  sx: { animation: 'fadeIn 0.3s ease-in-out' },
-                },
-              },
             },
           }}
           sx={{
@@ -107,22 +113,10 @@ export default function Page() {
             }
           }}
           slotProps={{
-            toolbar: {
-              hidden: true,
-            },
-            actionBar: {
-              sx: {
-                display: 'none',
-              },
-            },
+            ...defaultSlotProps,
             textField: {
               label: '종료일',
               size: 'small',
-            },
-            dialog: {
-              slotProps: {
-                paper: { sx: { animation: 'fadeIn 0.3s ease-in-out' } },
-              },
             },
           }}
           sx={{
@@ -143,6 +137,9 @@ export default function Page() {
             }
             return (
               <Stack direction="row" flexWrap="wrap" gap={1}>
+                <Button fullWidth size="small" LinkComponent={Link} href={`/calendar/${date.format('YYYY-MM-DD')}`}>
+                  <EditIcon />
+                </Button>
                 {ootdMap[date.format('YYYY-MM-DD')].map((clothing) => (
                   <Chip
                     key={`${clothing.sectionId}-${clothing.clothingId}`}
@@ -179,24 +176,12 @@ export default function Page() {
               }
             }}
             slotProps={{
-              toolbar: {
-                hidden: true,
-              },
-              actionBar: {
-                sx: {
-                  display: 'none',
-                },
-              },
+              ...defaultSlotProps,
               textField: {
                 fullWidth: true,
                 size: 'small',
                 sx: {
                   flex: 1,
-                },
-              },
-              dialog: {
-                slotProps: {
-                  paper: { sx: { animation: 'fadeIn 0.3s ease-in-out' } },
                 },
               },
             }}
@@ -217,24 +202,12 @@ export default function Page() {
               }
             }}
             slotProps={{
-              toolbar: {
-                hidden: true,
-              },
-              actionBar: {
-                sx: {
-                  display: 'none',
-                },
-              },
+              ...defaultSlotProps,
               textField: {
                 fullWidth: true,
                 size: 'small',
                 sx: {
                   flex: 1,
-                },
-              },
-              dialog: {
-                slotProps: {
-                  paper: { sx: { animation: 'fadeIn 0.3s ease-in-out' } },
                 },
               },
             }}
