@@ -133,7 +133,7 @@ export default function Page() {
         renderCell={(date) => {
           if (date.format('YYYY-MM-DD') in ootdMap) {
             if (isMobile) {
-              return <MobileOotdDialog ootdList={ootdMap[date.format('YYYY-MM-DD')]} />;
+              return <MobileOotdDialog date={date.format('YYYY-MM-DD')} ootdList={ootdMap[date.format('YYYY-MM-DD')]} />;
             }
             return (
               <Stack direction="row" flexWrap="wrap" gap={1}>

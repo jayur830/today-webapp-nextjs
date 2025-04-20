@@ -1,5 +1,6 @@
 'use client';
 
+import EditIcon from '@mui/icons-material/Edit';
 import ZoomOutMap from '@mui/icons-material/ZoomOutMap';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -8,27 +9,47 @@ import { grey } from '@mui/material/colors';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { sections } from '@/constants/clothing';
 import type { TodayClothingData } from '@/types';
 
 export interface MobileOotdDialogProps {
+  date: string;
   ootdList: TodayClothingData[];
 }
 
-export default function MobileOotdDialog({ ootdList }: MobileOotdDialogProps) {
+export default function MobileOotdDialog({ date, ootdList }: MobileOotdDialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <IconButton
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        <ZoomOutMap />
-      </IconButton>
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+        <IconButton
+          onClick={() => {
+            setOpen(true);
+          }}
+          sx={{
+            alignSelf: 'center',
+            width: 40,
+            aspectRatio: 1,
+          }}
+        >
+          <ZoomOutMap />
+        </IconButton>
+        <IconButton
+          LinkComponent={Link}
+          href={`/calendar/${date}`}
+          sx={{
+            alignSelf: 'center',
+            width: 40,
+            aspectRatio: 1,
+          }}
+        >
+          <EditIcon />
+        </IconButton>
+      </Box>
       <Dialog
         open={open}
         onClose={() => {
