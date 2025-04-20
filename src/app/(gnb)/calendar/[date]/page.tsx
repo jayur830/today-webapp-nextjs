@@ -1,5 +1,6 @@
 'use client';
 
+import { ChevronLeft } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -12,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'next/navigation';
 
+import Back from '@/components/Back';
 import { STORAGE_KEY, STORAGE_KEY_OOTD } from '@/constants';
 import { sections } from '@/constants/clothing';
 import useLocalStorageState from '@/hooks/useLocalStorageState';
@@ -61,9 +63,12 @@ export default function Page() {
   return (
     <Grid container direction={{ xs: 'column', md: 'row' }} width="100%" height="100%">
       <Grid flex={1} padding={2}>
-        <Typography variant="h2" marginBottom={2}>
-          의류 목록
-        </Typography>
+        <Stack direction="row" alignItems="center" gap={1} marginBottom={2}>
+          <Back iconButton>
+            <ChevronLeft fontSize="large" htmlColor="black" />
+          </Back>
+          <Typography variant="h2">의류 목록</Typography>
+        </Stack>
         {sections.map(({ id, title, items }) => (
           <Accordion key={id}>
             <AccordionSummary>
