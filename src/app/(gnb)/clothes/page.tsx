@@ -40,6 +40,7 @@ export default function Page() {
   useLayoutEffect(() => {
     const storage = localStorage.getItem(STORAGE_KEY);
     if (storage) {
+      console.log('storage:', JSON.parse(storage));
       setSavedData(JSON.parse(storage));
     }
   }, []);
@@ -137,7 +138,7 @@ export default function Page() {
                     }
                     onDelete={() => {
                       const filteredData = savedData.filter((item) => {
-                        return sectionId !== item.sectionId || clothingId !== item.clothingId;
+                        return sectionId !== item.sectionId || clothingId !== item.clothingId || color !== item.color;
                       });
                       localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredData));
                       setSavedData(filteredData);
