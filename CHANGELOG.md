@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.1.2...release-1.1.3) (2025-04-23)
+
+
+### Bug Fixes
+
+* 의류 삭제 시 필터링 로직에서 색상 비교 누락 ([dfcf3a9](https://github.com/jayur830/today-webapp-nextjs/commit/dfcf3a969f7facf35f4ba706491876b12f80e169))
+
 ## [1.1.2](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.1.1...release-1.1.2) (2025-04-20)
 
 
