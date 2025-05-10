@@ -23,11 +23,11 @@ import { sections } from '@/constants/clothing';
 import useLocalStorageState from '@/hooks/useLocalStorageState';
 import type { OotdType, TodayClothingData } from '@/types';
 
-import Calendar from './_resources/components/Calendar';
-import DatePicker from './_resources/components/DatePicker';
-import MobileOotdDialog from './_resources/components/MobileOotdDialog';
-import useCalendar from './_resources/hooks/useCalendar';
-import { getOOTD, groupBySectionId, mergeOOTD } from './_resources/utils';
+import Calendar from './_components/Calendar';
+import DatePicker from './_components/DatePicker';
+import MobileOotdDialog from './_components/MobileOotdDialog';
+import useCalendar from './_hooks/useCalendar';
+import { getOOTD, groupBySectionId, mergeOOTD } from './_utils';
 
 const defaultSlotProps = {
   toolbar: {

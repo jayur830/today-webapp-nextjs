@@ -15,7 +15,7 @@ import { STORAGE_KEY } from '@/constants';
 import { sections } from '@/constants/clothing';
 import type { TodayClothingData } from '@/types';
 
-import ColorPicker from './_resources/components/ColorPicker';
+import ColorPicker from './_components/ColorPicker';
 
 export default function Page() {
   const [data, setData] = useState(() =>
@@ -40,7 +40,6 @@ export default function Page() {
   useLayoutEffect(() => {
     const storage = localStorage.getItem(STORAGE_KEY);
     if (storage) {
-      console.log('storage:', JSON.parse(storage));
       setSavedData(JSON.parse(storage));
     }
   }, []);
