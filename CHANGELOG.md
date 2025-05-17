@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.1.3...release-1.2.0) (2025-05-17)
+
+
+### Features
+
+* chip → 옷 그림 형태로 보이도록 변경 작업 ([d196743](https://github.com/jayur830/today-webapp-nextjs/commit/d196743c70cdc79e3dcd78b9028d55d82358b1a6))
+
 ## [1.1.3](https://github.com/jayur830/today-webapp-nextjs/compare/release-1.1.2...release-1.1.3) (2025-04-23)
 
 
