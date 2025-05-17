@@ -1,6 +1,44 @@
 import { amber, blue, blueGrey, brown, cyan, deepOrange, deepPurple, green, grey, indigo, lightBlue, lightGreen, lime, orange, pink, purple, red, teal, yellow } from '@mui/material/colors';
+import type { FC, SVGProps } from 'react';
 
-export const sections = [
+import Coat from '@/assets/images/coat.svg';
+import Jeans from '@/assets/images/jeans.svg';
+import LongPufferCoat from '@/assets/images/long-puffer-coat.svg';
+import PaddedVest from '@/assets/images/padded-vest.svg';
+import ShortPuffer from '@/assets/images/short-puffer.svg';
+import Sweatshirt from '@/assets/images/sweatshirt.svg';
+
+type WearingGroupType = 'outerwear' | 'tops' | 'bottoms' | 'shoes';
+
+interface WearingType {
+  outerwear:
+    | 'coat'
+    | 'long_puffer_coat'
+    | 'short_puffer'
+    | 'padded_vest'
+    | 'mustang'
+    | 'blazer'
+    | 'trucker_jacket'
+    | 'aviation_jumper'
+    | 'rider_jacket'
+    | 'cardigan'
+    | 'fleece'
+    | 'windbreaker'
+    | 'safari_jacket';
+  tops: 'knit_and_sweater' | 'sweatshirt' | 'hoodie' | 'hooded_zip_up' | 'shirt' | 'collar_t_shirt' | 'long_sleeve_t_shirt' | 'short_sleeve_t_shirt' | 'sleeveless_t_shirt';
+  bottoms: 'jeans' | 'slacks' | 'shorts' | 'jogger' | 'cargo';
+  shoes: 'sneakers' | 'dress_shoes' | 'walker' | 'slippers' | 'sandal' | 'sports_shoes';
+}
+
+export const sections: {
+  id: WearingGroupType;
+  title: string;
+  items: {
+    id: WearingType[keyof WearingType];
+    title: string;
+    paint?: FC<SVGProps<SVGSVGElement>>;
+  }[];
+}[] = [
   {
     id: 'outerwear',
     title: '아우터',
@@ -8,18 +46,22 @@ export const sections = [
       {
         id: 'coat',
         title: '코트',
+        paint: Coat,
       },
       {
-        id: 'long_padding',
+        id: 'long_puffer_coat',
         title: '롱패딩',
+        paint: LongPufferCoat,
       },
       {
-        id: 'short_padding',
+        id: 'short_puffer',
         title: '숏패딩',
+        paint: ShortPuffer,
       },
       {
-        id: 'padding_vest',
+        id: 'padded_vest',
         title: '패딩조끼',
+        paint: PaddedVest,
       },
       {
         id: 'mustang',
@@ -68,8 +110,9 @@ export const sections = [
         title: '니트/스웨터',
       },
       {
-        id: 'man_to_man',
+        id: 'sweatshirt',
         title: '맨투맨',
+        paint: Sweatshirt,
       },
       {
         id: 'hoodie',
@@ -108,6 +151,7 @@ export const sections = [
       {
         id: 'jeans',
         title: '청바지',
+        paint: Jeans,
       },
       {
         id: 'slacks',

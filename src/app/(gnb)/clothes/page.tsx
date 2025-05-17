@@ -16,6 +16,7 @@ import { sections } from '@/constants/clothing';
 import type { TodayClothingData } from '@/types';
 
 import ColorPicker from './_components/ColorPicker';
+import WearingCard, { PreviewPrepare } from './_components/WearingCard';
 
 export default function Page() {
   const [data, setData] = useState(() =>
@@ -47,8 +48,8 @@ export default function Page() {
   return (
     <Stack divider={<Divider />} gap={5} width="100%" padding={2}>
       {sections.map(({ id: sectionId, title, items }) => (
-        <Grid key={sectionId} container direction={{ xs: 'column', md: 'row' }} gap={{ xs: 1, md: 2 }} width="100%">
-          <Box flex={1}>
+        <Grid key={sectionId} container direction="column" gap={{ xs: 1, md: 2 }} width="calc(100% - 32px)">
+          <Box>
             <Typography variant="h3" fontWeight={700}>
               {title}
             </Typography>
@@ -106,19 +107,19 @@ export default function Page() {
               추가
             </Button>
           </Box>
-          <Box display="flex" flexDirection="column" flex={1}>
+          <Box display="flex" flexDirection="column" width="100%">
             <Typography variant="h4" fontWeight={700} marginTop={{ xs: 2, md: 0 }} marginBottom={2}>
               목록
             </Typography>
             <Stack
               direction="row"
-              flexWrap="wrap"
               flex={1}
               gap={2}
               minHeight={100}
               borderColor={grey[400]}
               borderRadius={2}
               padding={2}
+              overflow="scroll"
               sx={{
                 borderWidth: 1,
                 borderStyle: 'solid',
@@ -126,25 +127,27 @@ export default function Page() {
             >
               {savedData
                 .filter(({ sectionId: targetSectionId }) => sectionId === targetSectionId)
-                .map(({ sectionId, clothingId, color }) => (
-                  <Chip
-                    key={`${sectionId}-${clothingId}-${color}`}
-                    label={
-                      <Stack direction="row" alignItems="center" gap={1}>
-                        {(sections.find(({ id }) => sectionId === id)?.items || []).find(({ id }) => id === clothingId)?.title || ''}
-                        <Box bgcolor={color} width={16} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
-                      </Stack>
-                    }
-                    onDelete={() => {
-                      const filteredData = savedData.filter((item) => {
-                        return sectionId !== item.sectionId || clothingId !== item.clothingId || color !== item.color;
-                      });
-                      localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredData));
-                      setSavedData(filteredData);
-                      toast.success('의류가 삭제되었습니다.');
-                    }}
-                  />
-                ))}
+                .map(({ sectionId, clothingId, color }) => {
+                  const value = (sections.find(({ id }) => sectionId === id)?.items || []).find(({ id }) => id === clothingId);
+                  const title = value?.title;
+                  const Paint = value?.paint;
+                  return (
+                    <WearingCard
+                      key={`${sectionId}-${clothingId}-${color}`}
+                      title={title || ''}
+                      onDelete={() => {
+                        const filteredData = savedData.filter((item) => {
+                          return sectionId !== item.sectionId || clothingId !== item.clothingId || color !== item.color;
+                        });
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredData));
+                        setSavedData(filteredData);
+                        toast.success('의류가 삭제되었습니다.');
+                      }}
+                    >
+                      {Paint ? <Paint fill={color} /> : <PreviewPrepare color={color} />}
+                    </WearingCard>
+                  );
+                })}
             </Stack>
           </Box>
         </Grid>

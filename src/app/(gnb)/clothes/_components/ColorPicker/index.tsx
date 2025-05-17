@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Popover from '@mui/material/Popover';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import { colors } from '@/constants/clothing';
 
@@ -18,6 +18,14 @@ export interface ColorPickerProps {
 
 export default function ColorPicker({ value, onChange }: ColorPickerProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null | undefined>();
+
+  const handleChange = useCallback(
+    (color: string) => {
+      onChange && onChange(color);
+      setAnchorEl(undefined);
+    },
+    [onChange],
+  );
 
   return (
     <>
@@ -97,23 +105,36 @@ export default function ColorPicker({ value, onChange }: ColorPickerProps) {
         </Stack>
         <Grid display="grid" gridTemplateColumns="repeat(14, 1fr)" gap={1} marginTop={1}>
           {colors.map((color, i) => (
-            <Button
+            <ColorButton
               key={`${color}-${i}`}
+              color={color}
               onClick={() => {
-                onChange && onChange(color);
-                setAnchorEl(undefined);
+                handleChange(color);
               }}
-              sx={{
-                minWidth: 0,
-                minHeight: 0,
-                padding: 0,
-              }}
-            >
-              <Box bgcolor={color} width={20} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
-            </Button>
+            />
           ))}
         </Grid>
       </Popover>
     </>
   );
 }
+
+interface ColorButtonProps {
+  color: string;
+  onClick(): void;
+}
+
+const ColorButton = memo(({ color, onClick }: ColorButtonProps) => {
+  return (
+    <Button
+      onClick={onClick}
+      sx={{
+        minWidth: 0,
+        minHeight: 0,
+        padding: 0,
+      }}
+    >
+      <Box bgcolor={color} width={20} border={`1px solid ${grey['400']}`} borderRadius={1} sx={{ aspectRatio: 1 }} />
+    </Button>
+  );
+});
